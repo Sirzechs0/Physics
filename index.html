@@ -4,15 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Targaryen Physics | The Science of Measurement</title>
-    <!-- Google Fonts: Cinzel for headings (Regal feel), Montserrat for body (Modern/Minimalist) -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Floating Embers Background -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- LOADING SCREEN -->
+    <div class="loader-container" id="loader">
+        <div class="loader-embers">
+            <div class="loader-ember"></div>
+            <div class="loader-ember"></div>
+            <div class="loader-ember"></div>
+            <div class="loader-ember"></div>
+            <div class="loader-ember"></div>
+            <div class="loader-ember"></div>
+        </div>
+        <div class="loader-content">
+            <img src="targaryen-crest.png" alt="Targaryen Crest" class="loader-crest">
+            <h1 class="loader-title">Fire and Blood</h1>
+            <p class="loader-subtitle">Forging the Realm of Measurement</p>
+            <div class="loader-bar-wrapper">
+                <div class="loader-bar" id="loaderBar"></div>
+            </div>
+            <p class="loader-percentage" id="loaderPercentage">0%</p>
+        </div>
+    </div>
+
+    <!-- DRACARYS FINALE OVERLAY -->
+    <div class="dracarys-overlay" id="dracarysOverlay">
+        <div class="dracarys-fire-burst"></div>
+        <div class="dracarys-ember"></div>
+        <div class="dracarys-ember"></div>
+        <div class="dracarys-ember"></div>
+        <div class="dracarys-ember"></div>
+        <div class="dracarys-ember"></div>
+        <div class="dracarys-ember"></div>
+        <div class="dracarys-ember"></div>
+        <div class="dracarys-ember"></div>
+        <div class="dracarys-ember"></div>
+        <div class="dracarys-ember"></div>
+        <div class="dracarys-ember"></div>
+        <div class="dracarys-content">
+            <img src="targaryen-crest.png" alt="Targaryen Crest" class="dracarys-crest">
+            <h1 class="dracarys-title">DRACARYS</h1>
+            <p class="dracarys-subtitle">You Have Mastered the Art of Measurement</p>
+            <p class="dracarys-score">Perfect Score: 8 / 8</p>
+            <div class="dracarys-quote">
+                <p class="dracarys-quote-text">"Fire cannot kill a dragon."</p>
+                <p class="dracarys-quote-author">— Daenerys Targaryen</p>
+            </div>
+            <button class="dracarys-close" id="dracarysClose">Continue the Journey</button>
+        </div>
+    </div>
+
+    <!-- Floating Embers -->
     <div class="embers-container">
         <div class="ember"></div>
         <div class="ember"></div>
@@ -173,6 +221,12 @@
                     </table>
                 </div>
             </div>
+
+            <div class="quote-block reveal-quote">
+                <i class="fas fa-book-open quote-icon"></i>
+                <p class="quote-text">"A reader lives a thousand lives before he dies. The man who never reads lives only one."</p>
+                <p class="quote-attribution">Jojen Reed</p>
+            </div>
         </section>
 
         <!-- Section 2: Unit Conversion -->
@@ -194,31 +248,59 @@
                 </div>
 
                 <div class="conversion-visual">
-                    <div class="staircase">
-                        <div class="step step-kilo"><span>k</span><small>×1000</small></div>
-                        <div class="step step-hecto"><span>h</span><small>×100</small></div>
-                        <div class="step step-deka"><span>da</span><small>×10</small></div>
-                        <div class="step step-base"><span>m / g / L</span><small>×1</small></div>
-                        <div class="step step-deci"><span>d</span><small>×0.1</small></div>
-                        <div class="step step-centi"><span>c</span><small>×0.01</small></div>
-                        <div class="step step-milli"><span>m</span><small>×0.001</small></div>
+                    <div class="staircase" id="animatedStaircase">
+                        <div class="step step-kilo" data-step="7"><span>k</span><small>×1000</small></div>
+                        <div class="step step-hecto" data-step="6"><span>h</span><small>×100</small></div>
+                        <div class="step step-deka" data-step="5"><span>da</span><small>×10</small></div>
+                        <div class="step step-base" data-step="4"><span>m / g / L</span><small>×1</small></div>
+                        <div class="step step-deci" data-step="3"><span>d</span><small>×0.1</small></div>
+                        <div class="step step-centi" data-step="2"><span>c</span><small>×0.01</small></div>
+                        <div class="step step-milli" data-step="1"><span>m</span><small>×0.001</small></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Case Study: Mars Climate Orbiter -->
             <div class="case-study-card">
                 <div class="case-study-header">
                     <i class="fas fa-rocket text-red"></i>
                     <h3>Case Study: The $125 Million Mistake</h3>
                 </div>
-                <p>In 1999, NASA lost the Mars Climate Orbiter because one team used pound-force seconds (English units) while the navigation software expected newton-seconds (SI units).</p>
-                <div class="case-study-interactive">
-                    <button class="btn btn-outline dracarys-btn" id="dracarysBtn">Reveal the Conversion Error</button>
-                    <div class="hidden-reveal" id="hiddenReveal">
-                        <p class="text-red">The navigation software was fed thruster-force numbers that were roughly 4.45 times smaller than the real value!</p>
+                <p>In 1999, NASA lost the Mars Climate Orbiter because one team used pound-force seconds (English units) while the navigation software expected newton-seconds (SI units). Drag the slider below to witness the 10-month journey.</p>
+                
+                <div class="orbiter-visual">
+                    <div class="space-track">
+                        <div class="planet earth-planet">
+                            <i class="fas fa-globe"></i>
+                            <span class="planet-label">EARTH</span>
+                        </div>
+                        <div class="planet mars-planet">
+                            <i class="fas fa-circle"></i>
+                            <span class="planet-label">MARS</span>
+                        </div>
+                        <svg class="trajectory-svg" viewBox="0 0 1000 200" preserveAspectRatio="none">
+                            <path d="M 30 100 L 970 100" class="path-correct" />
+                            <path d="M 30 100 C 350 100, 650 120, 970 190" class="path-actual" id="actualPath" />
+                        </svg>
+                        <div class="spacecraft-marker" id="spacecraftMarker">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                    </div>
+                    <div class="orbiter-controls">
+                        <input type="range" min="0" max="100" value="0" id="orbiterSlider" class="orbiter-slider">
+                    </div>
+                    <div class="orbiter-status" id="orbiterStatus">
+                        <div class="status-header">
+                            MISSION STATUS: <span class="status-value" id="statusValue">Awaiting Launch</span>
+                        </div>
+                        <p class="status-description" id="statusDescription">Drag the slider to begin the 10-month journey to Mars.</p>
                     </div>
                 </div>
+            </div>
+
+            <div class="quote-block reveal-quote">
+                <i class="fas fa-crown quote-icon"></i>
+                <p class="quote-text">"When you play the game of thrones, you win or you die. There is no middle ground."</p>
+                <p class="quote-attribution">Cersei Lannister</p>
             </div>
         </section>
 
@@ -315,6 +397,13 @@
             <div class="section-header">
                 <h2 class="section-title">The <span class="text-red">Trials</span></h2>
                 <p class="section-subtitle">Test Your Knowledge</p>
+                
+                <div class="score-display" id="scoreDisplay">
+                    <i class="fas fa-dragon"></i>
+                    <span class="score-label">Score:</span>
+                    <span class="score-value" id="scoreValue">0</span>
+                    <span class="score-max">/ 8</span>
+                </div>
             </div>
 
             <div class="trial-container">
@@ -323,7 +412,7 @@
                         <h3>Part A: Identification</h3>
                         <span class="points">1 pt each</span>
                     </div>
-                    <div class="question">
+                    <div class="question" data-question-id="q1" data-points="1">
                         <p>1. A quantity that cannot be expressed in terms of any other physical quantity.</p>
                         <div class="options">
                             <button class="option-btn">Derived Quantity</button>
@@ -331,7 +420,7 @@
                             <button class="option-btn">Scientific Notation</button>
                         </div>
                     </div>
-                    <div class="question">
+                    <div class="question" data-question-id="q2" data-points="1">
                         <p>2. The method of converting units by multiplying by conversion factors so that unwanted units cancel out.</p>
                         <div class="options">
                             <button class="option-btn">Factor-Label Method</button>
@@ -346,14 +435,14 @@
                         <h3>Part B: True or False</h3>
                         <span class="points">1 pt each</span>
                     </div>
-                    <div class="question">
+                    <div class="question" data-question-id="q3" data-points="1">
                         <p>1. Mass and weight are the same fundamental quantity.</p>
                         <div class="options">
                             <button class="option-btn">TRUE</button>
                             <button class="option-btn">FALSE</button>
                         </div>
                     </div>
-                    <div class="question">
+                    <div class="question" data-question-id="q4" data-points="1">
                         <p>2. A measurement can be precise without being accurate.</p>
                         <div class="options">
                             <button class="option-btn">TRUE</button>
@@ -367,20 +456,155 @@
                         <h3>Part C: Problem Solving</h3>
                         <span class="points">2 pts each</span>
                     </div>
-                    <div class="question">
+                    <div class="question" data-question-id="q5" data-points="2">
                         <p>1. Convert 3.2 km to meters.</p>
                         <div class="input-group">
                             <input type="text" placeholder="Enter your answer..." class="trial-input">
                             <button class="btn btn-check">Check</button>
                         </div>
                     </div>
-                    <div class="question">
+                    <div class="question" data-question-id="q6" data-points="2">
                         <p>2. Write 6,400,000 m in scientific notation.</p>
                         <div class="input-group">
                             <input type="text" placeholder="e.g., 6.4 x 10^6" class="trial-input">
                             <button class="btn btn-check">Check</button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: TERM PERFORMANCE TASK (ROYAL DECREE) -->
+        <section id="performance-task" class="section performance-task-section">
+            <div class="section-header">
+                <h2 class="section-title">The <span class="text-red">Final</span> Decree</h2>
+                <p class="section-subtitle">Term Performance Task — Field Metrology Officer</p>
+                <p class="section-intro">
+                    By order of the Citadel, you are hereby summoned to serve the realm as a Field Metrology Officer. 
+                    Investigate a real measurement scenario in your community and report your findings.
+                </p>
+            </div>
+
+            <div class="decree-scroll">
+                <div class="decree-seal">
+                    <img src="targaryen-crest.png" alt="Targaryen Seal" class="seal-image">
+                    <div class="seal-ring"></div>
+                </div>
+
+                <div class="decree-header">
+                    <p class="decree-preamble">By Order of the Citadel of Oldtown</p>
+                    <h3 class="decree-title">The Measurement Investigation Mission</h3>
+                    <div class="decree-divider">
+                        <span></span>
+                        <i class="fas fa-dragon"></i>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="decree-grid">
+                    <div class="decree-item">
+                        <div class="decree-item-icon"><i class="fas fa-bullseye"></i></div>
+                        <h4>Goal</h4>
+                        <p>Investigate a real, local measurement scenario and communicate whether the measurement involved can be trusted — applying fundamental/derived quantities, unit conversion, scientific notation, and an evaluation of accuracy and precision.</p>
+                    </div>
+                    <div class="decree-item">
+                        <div class="decree-item-icon"><i class="fas fa-user-shield"></i></div>
+                        <h4>Role</h4>
+                        <p>You are a <strong>Field Metrology Officer</strong> — a measurement quality inspector — for a community-based organization.</p>
+                    </div>
+                    <div class="decree-item">
+                        <div class="decree-item-icon"><i class="fas fa-users"></i></div>
+                        <h4>Audience</h4>
+                        <p>Barangay officials, fellow students, and community members attending a "Measurement Matters" community exhibit.</p>
+                    </div>
+                    <div class="decree-item">
+                        <div class="decree-item-icon"><i class="fas fa-map-marked-alt"></i></div>
+                        <h4>Situation</h4>
+                        <p>Your community is launching a public exhibit called <em>"Getting It Right: Why Measurement Matters"</em>, meant to help the public understand how accurate measurement protects health, safety, and fairness in everyday transactions.</p>
+                    </div>
+                    <div class="decree-item decree-item-wide">
+                        <div class="decree-item-icon"><i class="fas fa-scroll"></i></div>
+                        <h4>Product / Performance</h4>
+                        <p>Create a <strong>Measurement Investigation Report and Infographic/Poster</strong> that includes:</p>
+                        <ul class="decree-list">
+                            <li>Title and chosen scenario</li>
+                            <li>The physical quantity investigated, and whether it is fundamental or derived</li>
+                            <li>A data table of at least three trial measurements</li>
+                            <li>Unit conversions performed (at least two different units)</li>
+                            <li>Scientific notation, where appropriate</li>
+                            <li>An evaluation of accuracy (percent error against an accepted or reference value) and precision (consistency across trials)</li>
+                            <li>A real-world recommendation based on the findings</li>
+                            <li>At least two credible references, cited in APA 7th Edition format</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="decree-scenarios">
+                    <h4 class="scenarios-title"><i class="fas fa-search"></i> Choose Your Investigation</h4>
+                    <div class="scenario-grid">
+                        <div class="scenario-card">
+                            <i class="fas fa-balance-scale"></i>
+                            <p>Check whether a market vendor's weighing scale reads accurately.</p>
+                        </div>
+                        <div class="scenario-card">
+                            <i class="fas fa-pills"></i>
+                            <p>Verify a medicine dosage conversion at the health center.</p>
+                        </div>
+                        <div class="scenario-card">
+                            <i class="fas fa-taxi"></i>
+                            <p>Check a tricycle or jeepney fare meter.</p>
+                        </div>
+                        <div class="scenario-card">
+                            <i class="fas fa-thermometer-half"></i>
+                            <p>Test a home thermometer against a known reference.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="decree-rubric">
+                    <h4 class="rubric-title"><i class="fas fa-award"></i> Grading Criteria (100 Points Total)</h4>
+                    <div class="rubric-table">
+                        <div class="rubric-row rubric-row-header">
+                            <div class="rubric-cell">Criteria</div>
+                            <div class="rubric-cell">Points</div>
+                            <div class="rubric-cell">Description</div>
+                        </div>
+                        <div class="rubric-row">
+                            <div class="rubric-cell">Scientific Accuracy of Physics Concepts</div>
+                            <div class="rubric-cell">20 pts</div>
+                            <div class="rubric-cell">Concepts and computations are correct throughout.</div>
+                        </div>
+                        <div class="rubric-row">
+                            <div class="rubric-cell">Use of Unit Conversion</div>
+                            <div class="rubric-cell">15 pts</div>
+                            <div class="rubric-cell">Conversions are accurate and clearly shown.</div>
+                        </div>
+                        <div class="rubric-row">
+                            <div class="rubric-cell">Use of Scientific Notation</div>
+                            <div class="rubric-cell">15 pts</div>
+                            <div class="rubric-cell">Applied correctly wherever appropriate.</div>
+                        </div>
+                        <div class="rubric-row">
+                            <div class="rubric-cell">Evaluation of Accuracy & Precision</div>
+                            <div class="rubric-cell">20 pts</div>
+                            <div class="rubric-cell">Percent error correctly computed; clear interpretation of both.</div>
+                        </div>
+                        <div class="rubric-row">
+                            <div class="rubric-cell">Real-World Relevance & Recommendation</div>
+                            <div class="rubric-cell">15 pts</div>
+                            <div class="rubric-cell">Recommendation is specific, well-justified, and tied to the data.</div>
+                        </div>
+                        <div class="rubric-row">
+                            <div class="rubric-cell">Communication & Organization</div>
+                            <div class="rubric-cell">15 pts</div>
+                            <div class="rubric-cell">Report/poster is clear, well-organized, and visually engaging.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="decree-footer">
+                    <p class="decree-signature">"Fire and Blood, and the Truth of the Measure."</p>
+                    <p class="decree-sealed">— Sealed by the Maesters of the Citadel</p>
                 </div>
             </div>
         </section>
@@ -392,7 +616,10 @@
             <div class="footer-brand">
                 <h2>Fire & <span class="text-red">Measurement</span></h2>
                 <p>Physics 1 — Topic 1: Measurement</p>
-                <p class="quote">"A mind needs books as a sword needs a whetstone, if it is to keep its edge."</p>
+                <div class="footer-quote">
+                    <p class="footer-quote-text">"A mind needs books as a sword needs a whetstone, if it is to keep its edge."</p>
+                    <p class="footer-quote-author">— Tyrion Lannister</p>
+                </div>
             </div>
             <div class="footer-links">
                 <h3>References</h3>
@@ -410,6 +637,7 @@
                     <li><a href="#fundamentals">The Seven</a></li>
                     <li><a href="#conversions">The Great Conversion</a></li>
                     <li><a href="#trials">Trials</a></li>
+                    <li><a href="#performance-task">Final Decree</a></li>
                 </ul>
             </div>
         </div>
