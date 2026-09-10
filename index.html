@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Targaryen Physics | The Science of Measurement</title>
+    <!-- Google Fonts: Cinzel for headings (Regal feel), Montserrat for body (Modern/Minimalist) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Floating Embers Background -->
+    <div class="embers-container">
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            <img src="targaryen-crest.png" alt="Targaryen Crest" class="targaryen-crest">
+            <h1>Fire & <span class="highlight">Measurement</span></h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#hero">Overview</a></li>
+            <li><a href="#fundamentals">The Seven</a></li>
+            <li><a href="#conversions">The Great Conversion</a></li>
+            <li><a href="#scientific-notation">Dragon Fire</a></li>
+            <li><a href="#accuracy">Truth & Honor</a></li>
+            <li><a href="#trials" class="btn-nav">Trials</a></li>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="hero-section">
+        <div class="hero-bg-placeholder"></div>
+        <div class="hero-content">
+            <p class="subtitle">Physics 1 — Topic 1</p>
+            <h1 class="main-title valyrian-text">The Art of <span class="text-red">Measurement</span></h1>
+            <p class="hero-description">
+                Before a phenomenon can be explained or a kingdom can be built, someone must measure something carefully. 
+                Master the fundamental skills that make accurate measurement possible.
+            </p>
+            <div class="hero-cta">
+                <a href="#fundamentals" class="btn btn-primary dragonfire-btn">Begin the Journey</a>
+                <a href="#trials" class="btn btn-secondary">Skip to Trials</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to Explore</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 1: Fundamental & Derived Quantities -->
+        <section id="fundamentals" class="section fundamentals-section">
+            <div class="section-header">
+                <h2 class="section-title">The <span class="text-red">Seven</span> Kingdoms</h2>
+                <p class="section-subtitle">Fundamental (Base) Quantities</p>
+                <p class="section-intro">
+                    Fundamental quantities cannot be defined in terms of any other physical quantity. They are the independent building blocks of the universe.
+                </p>
+            </div>
+
+            <div class="grid-container seven-kingdoms-grid">
+                <div class="card kingdom-card">
+                    <div class="card-icon"><i class="fas fa-ruler-horizontal"></i></div>
+                    <h3>Length</h3>
+                    <p class="unit">Meter (m)</p>
+                    <p class="tool">Ruler, Tape Measure</p>
+                </div>
+                <div class="card kingdom-card">
+                    <div class="card-icon"><i class="fas fa-weight-hanging"></i></div>
+                    <h3>Mass</h3>
+                    <p class="unit">Kilogram (kg)</p>
+                    <p class="tool">Digital Scale</p>
+                </div>
+                <div class="card kingdom-card">
+                    <div class="card-icon"><i class="fas fa-hourglass-half"></i></div>
+                    <h3>Time</h3>
+                    <p class="unit">Second (s)</p>
+                    <p class="tool">Stopwatch, Clock</p>
+                </div>
+                <div class="card kingdom-card">
+                    <div class="card-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Electric Current</h3>
+                    <p class="unit">Ampere (A)</p>
+                    <p class="tool">Ammeter</p>
+                </div>
+                <div class="card kingdom-card">
+                    <div class="card-icon"><i class="fas fa-temperature-high"></i></div>
+                    <h3>Temperature</h3>
+                    <p class="unit">Kelvin (K)</p>
+                    <p class="tool">Thermometer</p>
+                </div>
+                <div class="card kingdom-card">
+                    <div class="card-icon"><i class="fas fa-flask"></i></div>
+                    <h3>Amount of Substance</h3>
+                    <p class="unit">Mole (mol)</p>
+                    <p class="tool">Computed</p>
+                </div>
+                <div class="card kingdom-card">
+                    <div class="card-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Luminous Intensity</h3>
+                    <p class="unit">Candela (cd)</p>
+                    <p class="tool">Photometer</p>
+                </div>
+            </div>
+
+            <div class="derived-section">
+                <div class="section-header">
+                    <h2 class="section-title">Derived <span class="text-red">Conquests</span></h2>
+                    <p class="section-subtitle">Built by Combining the Seven</p>
+                </div>
+                <div class="derived-table-container">
+                    <table class="derived-table">
+                        <thead>
+                            <tr>
+                                <th>Derived Quantity</th>
+                                <th>Relationship to Base Quantities</th>
+                                <th>SI Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Area</td>
+                                <td>length × length</td>
+                                <td>m²</td>
+                            </tr>
+                            <tr>
+                                <td>Volume</td>
+                                <td>length × length × length</td>
+                                <td>m³</td>
+                            </tr>
+                            <tr>
+                                <td>Speed / Velocity</td>
+                                <td>length ÷ time</td>
+                                <td>m/s</td>
+                            </tr>
+                            <tr>
+                                <td>Acceleration</td>
+                                <td>velocity ÷ time</td>
+                                <td>m/s²</td>
+                            </tr>
+                            <tr>
+                                <td>Density</td>
+                                <td>mass ÷ volume</td>
+                                <td>kg/m³</td>
+                            </tr>
+                            <tr>
+                                <td>Force (Weight)</td>
+                                <td>mass × acceleration</td>
+                                <td>N (kg·m/s²)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Unit Conversion -->
+        <section id="conversions" class="section conversions-section dark-alt-bg">
+            <div class="section-header">
+                <h2 class="section-title">The Great <span class="text-red">Conversion</span></h2>
+                <p class="section-subtitle">The Factor-Label Method (Dimensional Analysis)</p>
+            </div>
+            
+            <div class="conversion-content">
+                <div class="conversion-text">
+                    <p>Because different situations call for different unit sizes, physicists must convert measurements without changing the actual quantity. The safest way is the factor-label method.</p>
+                    <ol class="conversion-steps">
+                        <li>Write down the given measurement.</li>
+                        <li>Multiply by a conversion factor (a fraction equal to 1).</li>
+                        <li>Arrange so unwanted units cancel.</li>
+                        <li>Multiply straight across.</li>
+                    </ol>
+                </div>
+
+                <div class="conversion-visual">
+                    <div class="staircase">
+                        <div class="step step-kilo"><span>k</span><small>×1000</small></div>
+                        <div class="step step-hecto"><span>h</span><small>×100</small></div>
+                        <div class="step step-deka"><span>da</span><small>×10</small></div>
+                        <div class="step step-base"><span>m / g / L</span><small>×1</small></div>
+                        <div class="step step-deci"><span>d</span><small>×0.1</small></div>
+                        <div class="step step-centi"><span>c</span><small>×0.01</small></div>
+                        <div class="step step-milli"><span>m</span><small>×0.001</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study: Mars Climate Orbiter -->
+            <div class="case-study-card">
+                <div class="case-study-header">
+                    <i class="fas fa-rocket text-red"></i>
+                    <h3>Case Study: The $125 Million Mistake</h3>
+                </div>
+                <p>In 1999, NASA lost the Mars Climate Orbiter because one team used pound-force seconds (English units) while the navigation software expected newton-seconds (SI units).</p>
+                <div class="case-study-interactive">
+                    <button class="btn btn-outline dracarys-btn" id="dracarysBtn">Reveal the Conversion Error</button>
+                    <div class="hidden-reveal" id="hiddenReveal">
+                        <p class="text-red">The navigation software was fed thruster-force numbers that were roughly 4.45 times smaller than the real value!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Scientific Notation -->
+        <section id="scientific-notation" class="section sci-notation-section">
+            <div class="section-header">
+                <h2 class="section-title">Dragon <span class="text-red">Fire</span></h2>
+                <p class="section-subtitle">Scientific Notation</p>
+                <p class="section-intro">Physics deals with the extremely large (distances to stars) and the extremely small (atoms). Scientific notation keeps these numbers readable.</p>
+            </div>
+
+            <div class="notation-grid">
+                <div class="notation-card large-number">
+                    <h3>Large Numbers</h3>
+                    <p class="example">45,000,000</p>
+                    <div class="arrow-placeholder"><i class="fas fa-arrow-left"></i> 7 places</div>
+                    <p class="result">4.5 × 10<sup>7</sup></p>
+                </div>
+                <div class="notation-card small-number">
+                    <h3>Small Numbers</h3>
+                    <p class="example">0.00032</p>
+                    <div class="arrow-placeholder"><i class="fas fa-arrow-right"></i> 4 places</div>
+                    <p class="result">3.2 × 10<sup>-4</sup></p>
+                </div>
+            </div>
+
+            <div class="math-rules">
+                <div class="rule-card">
+                    <h4>Multiplication</h4>
+                    <p>Multiply coefficients, <strong>ADD</strong> exponents.</p>
+                    <p class="example">(3.0 × 10<sup>4</sup>) (2.0 × 10<sup>3</sup>) = 6.0 × 10<sup>7</sup></p>
+                </div>
+                <div class="rule-card">
+                    <h4>Division</h4>
+                    <p>Divide coefficients, <strong>SUBTRACT</strong> exponents.</p>
+                    <p class="example">(8.0 × 10<sup>8</sup>) ÷ (2.0 × 10<sup>3</sup>) = 4.0 × 10<sup>5</sup></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Accuracy and Precision -->
+        <section id="accuracy" class="section accuracy-section dark-alt-bg">
+            <div class="section-header">
+                <h2 class="section-title">Truth & <span class="text-red">Honor</span></h2>
+                <p class="section-subtitle">Accuracy vs. Precision</p>
+            </div>
+
+            <div class="accuracy-content">
+                <div class="target-visual">
+                    <div class="target-circle outer"></div>
+                    <div class="target-circle middle"></div>
+                    <div class="target-circle inner"></div>
+                    <div class="target-arrow arrow1"></div>
+                    <div class="target-arrow arrow2"></div>
+                    <div class="target-arrow arrow3"></div>
+                </div>
+
+                <div class="definitions">
+                    <div class="definition-card">
+                        <h3>Accuracy</h3>
+                        <p>How close a measurement is to the <strong>true or accepted value</strong>.</p>
+                        <p class="analogy">A scale that always reads 2kg heavier is precise, but not accurate.</p>
+                    </div>
+                    <div class="definition-card">
+                        <h3>Precision</h3>
+                        <p>How close repeated measurements are to <strong>one another</strong>.</p>
+                        <p class="analogy">A scale that gives random readings every time is accurate on average, but not precise.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="significant-figures">
+                <h3>Significant Figures</h3>
+                <p>Digits that carry real meaning and reflect the precision of the instrument.</p>
+                <ul class="sig-fig-rules">
+                    <li><span class="rule-num">1</span> All non-zero digits are significant. (245 = 3 sig figs)</li>
+                    <li><span class="rule-num">2</span> Zeros between non-zero digits are significant. (2005 = 4 sig figs)</li>
+                    <li><span class="rule-num">3</span> Leading zeros are never significant. (0.0025 = 2 sig figs)</li>
+                    <li><span class="rule-num">4</span> Trailing zeros after a decimal point are significant. (2.500 = 4 sig figs)</li>
+                </ul>
+            </div>
+
+            <div class="percent-error">
+                <h3>Percent Error</h3>
+                <div class="formula-box">
+                    <p>Percent Error = |Experimental Value - Accepted Value| ÷ Accepted Value × 100%</p>
+                </div>
+                <p class="example">If water boils at 98.5°C (accepted is 100°C): |98.5 - 100| ÷ 100 × 100% = <span class="text-red">1.5% error</span></p>
+            </div>
+        </section>
+
+        <!-- Section 5: Interactive Trials -->
+        <section id="trials" class="section trials-section">
+            <div class="section-header">
+                <h2 class="section-title">The <span class="text-red">Trials</span></h2>
+                <p class="section-subtitle">Test Your Knowledge</p>
+            </div>
+
+            <div class="trial-container">
+                <div class="trial-card" id="trial-1">
+                    <div class="trial-header">
+                        <h3>Part A: Identification</h3>
+                        <span class="points">1 pt each</span>
+                    </div>
+                    <div class="question">
+                        <p>1. A quantity that cannot be expressed in terms of any other physical quantity.</p>
+                        <div class="options">
+                            <button class="option-btn">Derived Quantity</button>
+                            <button class="option-btn">Fundamental Quantity</button>
+                            <button class="option-btn">Scientific Notation</button>
+                        </div>
+                    </div>
+                    <div class="question">
+                        <p>2. The method of converting units by multiplying by conversion factors so that unwanted units cancel out.</p>
+                        <div class="options">
+                            <button class="option-btn">Factor-Label Method</button>
+                            <button class="option-btn">Scientific Notation</button>
+                            <button class="option-btn">Accuracy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trial-card" id="trial-2">
+                    <div class="trial-header">
+                        <h3>Part B: True or False</h3>
+                        <span class="points">1 pt each</span>
+                    </div>
+                    <div class="question">
+                        <p>1. Mass and weight are the same fundamental quantity.</p>
+                        <div class="options">
+                            <button class="option-btn">TRUE</button>
+                            <button class="option-btn">FALSE</button>
+                        </div>
+                    </div>
+                    <div class="question">
+                        <p>2. A measurement can be precise without being accurate.</p>
+                        <div class="options">
+                            <button class="option-btn">TRUE</button>
+                            <button class="option-btn">FALSE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trial-card" id="trial-3">
+                    <div class="trial-header">
+                        <h3>Part C: Problem Solving</h3>
+                        <span class="points">2 pts each</span>
+                    </div>
+                    <div class="question">
+                        <p>1. Convert 3.2 km to meters.</p>
+                        <div class="input-group">
+                            <input type="text" placeholder="Enter your answer..." class="trial-input">
+                            <button class="btn btn-check">Check</button>
+                        </div>
+                    </div>
+                    <div class="question">
+                        <p>2. Write 6,400,000 m in scientific notation.</p>
+                        <div class="input-group">
+                            <input type="text" placeholder="e.g., 6.4 x 10^6" class="trial-input">
+                            <button class="btn btn-check">Check</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2>Fire & <span class="text-red">Measurement</span></h2>
+                <p>Physics 1 — Topic 1: Measurement</p>
+                <p class="quote">"A mind needs books as a sword needs a whetstone, if it is to keep its edge."</p>
+            </div>
+            <div class="footer-links">
+                <h3>References</h3>
+                <ul>
+                    <li>Bureau International des Poids et Mesures (2019)</li>
+                    <li>Department of Education, Philippines (2016)</li>
+                    <li>NASA/JPL Mars Climate Orbiter Mission Records</li>
+                    <li>OpenStax University Physics Volume 1</li>
+                </ul>
+            </div>
+            <div class="footer-nav">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#hero">Overview</a></li>
+                    <li><a href="#fundamentals">The Seven</a></li>
+                    <li><a href="#conversions">The Great Conversion</a></li>
+                    <li><a href="#trials">Trials</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Targaryen Physics. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
