@@ -59,6 +59,7 @@
 }
 
 html {
+    font-size: 18px;   /* ← new line — was 16px browser default */
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
 }
@@ -670,7 +671,7 @@ input:focus-visible,
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-bottom: 3px solid var(--accent-red);
-    width: 60px;
+    width: 68px;
     transition: all var(--transition-smooth);
     position: relative;
 }
@@ -681,13 +682,14 @@ input:focus-visible,
 }
 
 .step span {
+    font-size: 1.3rem;
     font-weight: bold;
     color: var(--text-light);
     padding-bottom: 5px;
 }
 
 .step small {
-    font-size: 0.6rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
     padding-bottom: 10px;
 }
@@ -2524,6 +2526,59 @@ body {
     max-width: 100%;
 }
 
+/* ==========================================================================
+   NAVBAR FREEZE — keep header at original size despite the new 18px base
+   ========================================================================== */
+
+/* Default (desktop) */
+.navbar {
+    padding: 24px 64px;              /* was 1.5rem 4rem  @ 16px */
+}
+.navbar.scrolled {
+    padding-top: 16px;               /* was 1rem  @ 16px */
+    padding-bottom: 16px;
+}
+.logo h1 {
+    font-size: 24px;                 /* was 1.5rem  @ 16px */
+}
+.nav-links {
+    gap: 40px;                       /* was 2.5rem  @ 16px */
+}
+.nav-links li a {
+    font-size: 13.6px;               /* was 0.85rem @ 16px */
+}
+.btn-nav {
+    padding: 9.6px 24px;             /* was 0.6rem 1.5rem @ 16px */
+}
+
+/* Match the original 1024px breakpoint */
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 24px 32px;          /* was 1.5rem 2rem @ 16px */
+    }
+}
+
+/* Match the original 768px breakpoint */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 16px 24px;          /* was 1rem 1.5rem @ 16px */
+    }
+    .nav-links {
+        padding: 32px;               /* was 2rem @ 16px */
+        gap: 24px;                   /* was 1.5rem @ 16px */
+    }
+}
+
+/* Override the mobile fixes v3 navbar trim so it stays at original size */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+    .navbar {
+        padding: 16px 24px;
+    }
+    .logo h1 {
+        font-size: 17.6px;           /* was 1.1rem @ 16px */
+    }
+}
+
 /* --- Safety net: force the Final Decree visible regardless of JS state --- */
 #performance-task.performance-task-section {
     opacity: 1 !important;
@@ -2600,7 +2655,7 @@ body {
     .notation-grid,
     .math-rules       { gap: 1.5rem; }
 
-    /* ----- STAIRCASE: shrink so all 7 fit on one row ----- */
+    /* ----- STAIRCASE: bigger letters + more room per step ----- */
     .conversion-visual {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
@@ -2608,11 +2663,11 @@ body {
     .staircase {
         transform: none;
         gap: 3px;
-        height: 200px;
+        height: 210px;
     }
-    .step      { width: 36px; }
-    .step span { font-size: 0.7rem; }
-    .step small{ font-size: 0.5rem; padding-bottom: 6px; }
+    .step      { width: 46px; }
+    .step span { font-size: 1.02rem; }
+    .step small{ font-size: 0.64rem; padding-bottom: 6px; }
 
     /* ----- TARGET DIAGRAM: scale down ----- */
     .target-visual           { height: 260px; }
@@ -2718,9 +2773,9 @@ body {
     .main-title    { font-size: 1.8rem; }
     .section-title { font-size: 1.7rem; }
     .staircase     { gap: 2px; }
-    .step          { width: 34px; }
-    .step span     { font-size: 0.6rem; }
-    .step small    { font-size: 0.45rem; }
+    .step          { width: 44px; }
+    .step span     { font-size: 0.93rem; }
+    .step small    { font-size: 0.60rem; }
     .decree-title  { font-size: 1.3rem; }
     .loader-title  { font-size: 1.6rem; letter-spacing: 3px; }
     .dracarys-title{ font-size: 2rem;   letter-spacing: 4px; }

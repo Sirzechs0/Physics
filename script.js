@@ -258,33 +258,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
     quoteBlocks.forEach(quote => quoteObserver.observe(quote));
 
-    // ======================================================================
-    // 6c. ANIMATED METRIC STAIRCASE
+        // ======================================================================
+    // 6c. ANIMATED METRIC STAIRCASE (LOOPING)
     // ======================================================================
     const staircase = document.getElementById('animatedStaircase');
     const staircaseSteps = document.querySelectorAll('.staircase .step');
 
     if (staircase && staircaseSteps.length > 0) {
-        const staircaseObserver = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                staircaseSteps.forEach((step, index) => {
-                    setTimeout(() => {
-                        step.classList.add('lit');
-                    }, index * 300);
-                });
-                
-                setTimeout(() => {
-                    staircaseSteps.forEach((step, index) => {
-                        setTimeout(() => {
-                            step.classList.remove('lit');
-                        }, index * 150);
-                    });
-                }, 5000);
-                
-                staircaseObserver.disconnect();
+        const STEP_ON_DELAY  = 300;   // ms between each step lighting up
+        const STEP_OFF_DELAY = 150;   // ms between each step fading out
+        const HOLD_TIME      = 3000;  // ms all steps stay lit
+        const CYCLE_GAP      = 800;   // ms pause before starting over
+
+        let isRunning = false;
+        let stepTimers = [];
+        let loopTimer = null;
+
+        function clearAllStaircaseTimers() {
+            stepTimers.forEach(t => clearTimeout(t));
+            stepTimers = [];
+            if (loopTimer) {
+                clearTimeout(loopTimer);
+                loopTimer = null;
             }
-        }, { threshold: 0.5 });
-        
+        }
+
+        function scheduleStep(fn, delay) {
+            const t = setTimeout(fn, delay);
+            stepTimers.push(t);
+        }
+
+        function runStaircaseCycle() {
+            if (!isRunning) return;
+            clearAllStaircaseTimers();
+
+            // Phase 1 — light up one by one
+            staircaseSteps.forEach((step, index) => {
+                scheduleStep(() => step.classList.add('lit'), index * STEP_ON_DELAY);
+            });
+
+            const totalOnTime  = (staircaseSteps.length - 1) * STEP_ON_DELAY;
+            const turnOffStart = totalOnTime + HOLD_TIME;
+
+            // Phase 2 — fade out one by one
+            staircaseSteps.forEach((step, index) => {
+                scheduleStep(
+                    () => step.classList.remove('lit'),
+                    turnOffStart + index * STEP_OFF_DELAY
+                );
+            });
+
+            // Phase 3 — schedule the next cycle
+            const totalOffTime  = (staircaseSteps.length - 1) * STEP_OFF_DELAY;
+            const cycleDuration = turnOffStart + totalOffTime + CYCLE_GAP;
+            loopTimer = setTimeout(runStaircaseCycle, cycleDuration);
+        }
+
+        const staircaseObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !isRunning) {
+                    isRunning = true;
+                    runStaircaseCycle();
+                } else if (!entry.isIntersecting && isRunning) {
+                    isRunning = false;
+                    clearAllStaircaseTimers();
+                    staircaseSteps.forEach(s => s.classList.remove('lit'));
+                }
+            });
+        }, { threshold: 0.3 });
+
         staircaseObserver.observe(staircase);
     }
 
