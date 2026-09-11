@@ -99,9 +99,6 @@ a:hover {
     color: var(--accent-red-bright);
 }
 
-/* Keyboard-focus ring, kept visually distinct from the red hover states
-   so tab-navigation is always easy to track. Mouse/touch clicks never
-   trigger :focus-visible, so this never shows up as an unwanted click flash. */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -1521,7 +1518,7 @@ input:focus-visible,
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN (original)
    ========================================================================== */
 @media (max-width: 1024px) {
     .main-title { font-size: 4rem; }
@@ -1610,9 +1607,6 @@ input:focus-visible,
     background: linear-gradient(rgba(6, 4, 3, 0.95), rgba(6, 4, 3, 0.95)), url('background7.jpg') center/cover fixed;
 }
 
-/* Fixed backgrounds are a common source of scroll jank on touch devices
-   and are inconsistently supported there, so switch to normal scrolling
-   backgrounds below the desktop breakpoint. */
 @media (max-width: 900px), (hover: none) and (pointer: coarse) {
     #fundamentals, #conversions, #scientific-notation, #accuracy, #trials, .footer {
         background-attachment: scroll;
@@ -2516,102 +2510,10 @@ input:focus-visible,
 }
 
 /* ==========================================================================
-   MOBILE BACKGROUNDS (mobile1.jpg ... mobile7.jpg)
-   ========================================================================== */
-@media (max-width: 900px), (hover: none) and (pointer: coarse) {
-    .hero-bg-placeholder {
-        background-image: url('mobile1.jpg');
-        background-position: center;
-        background-size: cover;
-        background-attachment: scroll;
-    }
-    #fundamentals {
-        background-image: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)), url('mobile2.jpg');
-        background-attachment: scroll;
-    }
-    #conversions {
-        background-image: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)), url('mobile3.jpg');
-        background-attachment: scroll;
-    }
-    #scientific-notation {
-        background-image: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)), url('mobile4.jpg');
-        background-attachment: scroll;
-    }
-    #accuracy {
-        background-image: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)), url('mobile5.jpg');
-        background-attachment: scroll;
-    }
-    #trials {
-        background-image: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)), url('mobile6.jpg');
-        background-attachment: scroll;
-    }
-    .footer {
-        background-image: linear-gradient(rgba(6, 4, 3, 0.95), rgba(6, 4, 3, 0.95)), url('mobile7.jpg');
-        background-attachment: scroll;
-    }
-}
-
-/* ==========================================================================
-   EXTRA SMALL SCREENS (max-width: 480px)
-   ========================================================================== */
-@media (max-width: 480px) {
-    .navbar {
-        padding: 0.8rem 1rem;
-    }
-    .logo h1 {
-        font-size: 1rem;
-    }
-    .targaryen-crest {
-        width: 40px;
-        height: 40px;
-    }
-    .main-title {
-        font-size: 2rem;
-    }
-    .section {
-        padding: 4rem 1rem;
-    }
-    .section-title {
-        font-size: 1.8rem;
-    }
-    .staircase {
-        transform: scale(0.7);
-        transform-origin: left center;
-    }
-    .conversion-content {
-        gap: 2rem;
-    }
-    .trial-card {
-        padding: 1.5rem;
-    }
-    .decree-scroll {
-        padding: 3rem 1rem 2rem 1rem;
-    }
-    .decree-title {
-        font-size: 1.4rem;
-    }
-    .rubric-cell {
-        padding: 0.8rem;
-    }
-    .space-track {
-        height: 120px;
-    }
-    .earth-planet i {
-        font-size: 1.5rem;
-    }
-    .mars-planet i {
-        font-size: 1.2rem;
-    }
-    .spacecraft-marker {
-        font-size: 0.9rem;
-    }
-}
-
-/* ==========================================================================
-   MOBILE OVERFLOW + BACKGROUND FIXES (v2) — append to end of styles.css
+   MOBILE FIXES — v3 (append only; overrides earlier rules on small screens)
    ========================================================================== */
 
-/* 1. Stop horizontal scroll at the root level (works where body-only doesn't) */
+/* --- Global overflow prevention (works where body-only doesn't) --- */
 html {
     overflow-x: hidden;
     width: 100%;
@@ -2622,10 +2524,20 @@ body {
     max-width: 100%;
 }
 
-/* 2. Mobile-only backgrounds with FIXED attachment (mobile1..7.jpg) */
+/* --- Safety net: force the Final Decree visible regardless of JS state --- */
+#performance-task.performance-task-section {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+}
+
 @media (max-width: 900px), (hover: none) and (pointer: coarse) {
 
-    /* HERO — fixed attachment sizes the image to the viewport, no zoom */
+    /* =====================================================================
+       1. MOBILE BACKGROUNDS (mobile1.jpg ... mobile7.jpg)
+       Fixed attachment = image sized to viewport (matches desktop look,
+       no zoom). If a mobile image is missing the gradient still shows.
+       ===================================================================== */
     .hero-bg-placeholder {
         background-image: url('mobile1.jpg');
         background-size: cover;
@@ -2634,7 +2546,6 @@ body {
         background-repeat: no-repeat;
         transform: none !important; /* disable JS parallax so it doesn't fight fixed bg */
     }
-
     #fundamentals {
         background: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)),
                     url('mobile2.jpg') center/cover fixed no-repeat;
@@ -2660,20 +2571,18 @@ body {
                     url('mobile7.jpg') center/cover fixed no-repeat;
     }
 
-    /* ---------- LAYOUT / OVERFLOW FIXES ---------- */
-
-    /* Tighter section padding so nothing pushes past the edges */
+    /* =====================================================================
+       2. LAYOUT / OVERFLOW FIXES
+       ===================================================================== */
     .section,
     .performance-task-section {
         padding: 5rem 1.25rem;
         max-width: 100%;
     }
-    .footer {
-        padding: 4rem 1.25rem 2rem 1.25rem;
-    }
+    .footer  { padding: 4rem 1.25rem 2rem 1.25rem; }
     .hero-section { padding: 0 1.25rem; }
 
-    /* Kill every hard min-width that was forcing overflow */
+    /* Kill hard min-widths that force overflow */
     .conversion-text,
     .conversion-visual,
     .definitions,
@@ -2686,13 +2595,12 @@ body {
         flex: 1 1 100%;
     }
 
-    /* Reduce flex gaps that were huge on a phone */
     .conversion-content,
     .accuracy-content { gap: 2rem; }
     .notation-grid,
-    .math-rules { gap: 1.5rem; }
+    .math-rules       { gap: 1.5rem; }
 
-    /* Staircase: shrink columns so all 7 fit in one row */
+    /* ----- STAIRCASE: shrink so all 7 fit on one row ----- */
     .conversion-visual {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
@@ -2706,13 +2614,13 @@ body {
     .step span { font-size: 0.7rem; }
     .step small{ font-size: 0.5rem; padding-bottom: 6px; }
 
-    /* Target diagram: scale circles down */
+    /* ----- TARGET DIAGRAM: scale down ----- */
     .target-visual           { height: 260px; }
     .target-circle.outer     { width: 220px; height: 220px; }
     .target-circle.middle    { width: 130px; height: 130px; }
     .target-circle.inner     { width: 45px;  height: 45px;  }
 
-    /* Card padding — trim so cards stop overflowing */
+    /* ----- Padding trims ----- */
     .case-study-card,
     .notation-card,
     .trial-card,
@@ -2722,22 +2630,20 @@ body {
     .kingdom-card {
         padding: 1.75rem 1.25rem;
     }
-    .rule-card  { padding: 1.5rem 1.25rem; }
-    .quote-block{ padding: 1.5rem 1.25rem; }
-    .decree-scroll { padding: 4rem 1.25rem 2rem 1.25rem; }
-    .decree-item { padding: 1.4rem 1.1rem; }
+    .rule-card     { padding: 1.5rem 1.25rem; }
+    .quote-block   { padding: 1.5rem 1.25rem; }
 
-    /* Long words wrap instead of overflowing */
+    /* ----- Word breaking + titles ----- */
     .main-title,
     .section-title,
     .decree-title,
     .dracarys-title {
         word-break: break-word;
     }
-    .main-title   { font-size: 2.2rem; }
-    .section-title{ font-size: 2rem;   }
+    .main-title    { font-size: 2.2rem; }
+    .section-title { font-size: 2rem;   }
 
-    /* Tables scroll inside their own container, not the page */
+    /* ----- Tables scroll internally ----- */
     .derived-table-container {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
@@ -2745,13 +2651,13 @@ body {
     }
     .derived-table { min-width: 520px; }
 
-    /* Rubric → single column */
+    /* ----- Rubric → single column ----- */
     .rubric-row             { grid-template-columns: 1fr; }
     .rubric-cell            { border-right: none; border-bottom: 1px solid var(--border-color); }
     .rubric-cell:last-child { border-bottom: none; }
     .rubric-row-header      { display: none; }
 
-    /* Misc small-screen trims */
+    /* ----- Misc small-screen trims ----- */
     .loader-bar-wrapper { width: 100%; max-width: 260px; }
     .loader-title       { font-size: 2rem;   letter-spacing: 4px; }
     .loader-subtitle    { font-size: 0.75rem;letter-spacing: 2px; }
@@ -2762,9 +2668,50 @@ body {
     .logo h1            { font-size: 1.1rem; }
     .space-track        { height: 160px; }
     .score-display      { padding: 0.8rem 1.25rem; flex-wrap: wrap; justify-content: center; }
+
+    /* =====================================================================
+       3. FINAL DECREE → SINGLE COLUMN (was causing horizontal scroll)
+       ===================================================================== */
+    .decree-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem !important;
+        width: 100% !important;
+    }
+    .decree-item-wide {
+        grid-column: span 1 !important;
+    }
+    .decree-scroll {
+        padding: 3rem 1rem 1.5rem 1rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .decree-item,
+    .decree-item p,
+    .decree-item h4,
+    .decree-list li,
+    .rubric-cell {
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
+        min-width: 0 !important;
+    }
+    .decree-item {
+        padding: 1.25rem 1rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .decree-list li {
+        padding-left: 1.4rem !important;
+        font-size: 0.85rem !important;
+    }
+    .decree-title {
+        font-size: 1.6rem !important;
+        letter-spacing: 2px !important;
+    }
 }
 
-/* 3. Extra-narrow devices (older iPhone SE, small Androids) */
+/* ==========================================================================
+   EXTRA NARROW DEVICES (max-width: 400px)
+   ========================================================================== */
 @media (max-width: 400px) {
     .section,
     .performance-task-section { padding: 4rem 1rem; }
@@ -2780,74 +2727,4 @@ body {
     .target-circle.outer  { width: 180px; height: 180px; }
     .target-circle.middle { width: 110px; height: 110px; }
     .target-circle.inner  { width: 40px;  height: 40px;  }
-}
-
-/* ==========================================================================
-   FINAL DECREE MOBILE FIX (v3) — append to very bottom of styles.css
-   ========================================================================== */
-@media (max-width: 900px), (hover: none) and (pointer: coarse) {
-    /* 1. Force the grid to a single column */
-    .decree-grid {
-        grid-template-columns: 1fr !important;
-        gap: 1.25rem !important;
-        width: 100% !important;
-    }
-
-    /* 2. Force the wide item to also take up only one column */
-    .decree-item-wide {
-        grid-column: span 1 !important;
-    }
-
-    /* 3. Ensure the scroll container fits inside the screen */
-    .decree-scroll {
-        padding: 3rem 1rem 1.5rem 1rem !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-        border-radius: 8px;
-    }
-
-    /* 4. Prevent long words/URLs from pushing the container wider */
-    .decree-item, 
-    .decree-item p, 
-    .decree-item h4, 
-    .decree-list li,
-    .rubric-cell {
-        overflow-wrap: break-word !important;
-        word-break: break-word !important;
-        min-width: 0 !important;
-    }
-
-    /* 5. Fix the padding inside the decree items so text has room */
-    .decree-item {
-        padding: 1.25rem 1rem !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
-
-    .decree-list li {
-        padding-left: 1.4rem !important;
-        font-size: 0.85rem !important;
-    }
-
-    /* 6. Fix the Rubric Table so it stacks vertically instead of squishing */
-    .rubric-row {
-        grid-template-columns: 1fr !important;
-    }
-    .rubric-cell {
-        border-right: none !important;
-        border-bottom: 1px solid var(--border-color) !important;
-        padding: 0.8rem 1rem !important;
-    }
-    .rubric-cell:last-child {
-        border-bottom: none !important;
-    }
-    .rubric-row-header {
-        display: none !important;
-    }
-
-    /* 7. Slightly reduce the giant title so it fits better */
-    .decree-title {
-        font-size: 1.6rem !important;
-        letter-spacing: 2px !important;
-    }
 }

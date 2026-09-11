@@ -179,9 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar');
 
     // ======================================================================
-    // UNIFIED SCROLL HANDLER (progress bar + parallax + navbar state)
-    // One rAF-throttled listener drives all three so scrolling only ever
-    // does one layout read and one batch of style writes per frame.
+    // UNIFIED SCROLL HANDLER
     // ======================================================================
     let latestScrollY = window.pageYOffset || 0;
     let scrollTicking = false;
@@ -214,18 +212,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 
-    // Run once on load so the correct state shows even if the page
-    // opens already scrolled (e.g. returning via a same-page anchor).
     applyScrollEffects();
 
     // ======================================================================
     // 6. SCROLL REVEAL ANIMATIONS
+    // (Note: .performance-task-section removed so it never gets stuck hidden)
     // ======================================================================
-    const revealElements = document.querySelectorAll('.card, .trial-card, .section-header, .case-study-card, .notation-card, .definition-card, .significant-figures, .percent-error, .performance-task-section');
+    const revealElements = document.querySelectorAll('.card, .trial-card, .section-header, .case-study-card, .notation-card, .definition-card, .significant-figures, .percent-error');
 
     const revealOptions = {
         threshold: 0.15,
-        rootMargin: "0px 0px -80px 0px"
+        rootMargin: "0px 0px -50px 0px"
     };
 
     const revealOnScroll = new IntersectionObserver(function(entries, observer) {
