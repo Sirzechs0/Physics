@@ -2606,3 +2606,178 @@ input:focus-visible,
         font-size: 0.9rem;
     }
 }
+
+/* ==========================================================================
+   MOBILE OVERFLOW + BACKGROUND FIXES (v2) — append to end of styles.css
+   ========================================================================== */
+
+/* 1. Stop horizontal scroll at the root level (works where body-only doesn't) */
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* 2. Mobile-only backgrounds with FIXED attachment (mobile1..7.jpg) */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+
+    /* HERO — fixed attachment sizes the image to the viewport, no zoom */
+    .hero-bg-placeholder {
+        background-image: url('mobile1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        transform: none !important; /* disable JS parallax so it doesn't fight fixed bg */
+    }
+
+    #fundamentals {
+        background: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)),
+                    url('mobile2.jpg') center/cover fixed no-repeat;
+    }
+    #conversions {
+        background: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)),
+                    url('mobile3.jpg') center/cover fixed no-repeat;
+    }
+    #scientific-notation {
+        background: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)),
+                    url('mobile4.jpg') center/cover fixed no-repeat;
+    }
+    #accuracy {
+        background: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)),
+                    url('mobile5.jpg') center/cover fixed no-repeat;
+    }
+    #trials {
+        background: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)),
+                    url('mobile6.jpg') center/cover fixed no-repeat;
+    }
+    .footer {
+        background: linear-gradient(rgba(6, 4, 3, 0.95), rgba(6, 4, 3, 0.95)),
+                    url('mobile7.jpg') center/cover fixed no-repeat;
+    }
+
+    /* ---------- LAYOUT / OVERFLOW FIXES ---------- */
+
+    /* Tighter section padding so nothing pushes past the edges */
+    .section,
+    .performance-task-section {
+        padding: 5rem 1.25rem;
+        max-width: 100%;
+    }
+    .footer {
+        padding: 4rem 1.25rem 2rem 1.25rem;
+    }
+    .hero-section { padding: 0 1.25rem; }
+
+    /* Kill every hard min-width that was forcing overflow */
+    .conversion-text,
+    .conversion-visual,
+    .definitions,
+    .notation-card,
+    .rule-card,
+    .trial-card,
+    .target-visual {
+        min-width: 0;
+        width: 100%;
+        flex: 1 1 100%;
+    }
+
+    /* Reduce flex gaps that were huge on a phone */
+    .conversion-content,
+    .accuracy-content { gap: 2rem; }
+    .notation-grid,
+    .math-rules { gap: 1.5rem; }
+
+    /* Staircase: shrink columns so all 7 fit in one row */
+    .conversion-visual {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .staircase {
+        transform: none;
+        gap: 3px;
+        height: 200px;
+    }
+    .step      { width: 36px; }
+    .step span { font-size: 0.7rem; }
+    .step small{ font-size: 0.5rem; padding-bottom: 6px; }
+
+    /* Target diagram: scale circles down */
+    .target-visual           { height: 260px; }
+    .target-circle.outer     { width: 220px; height: 220px; }
+    .target-circle.middle    { width: 130px; height: 130px; }
+    .target-circle.inner     { width: 45px;  height: 45px;  }
+
+    /* Card padding — trim so cards stop overflowing */
+    .case-study-card,
+    .notation-card,
+    .trial-card,
+    .definition-card,
+    .significant-figures,
+    .percent-error,
+    .kingdom-card {
+        padding: 1.75rem 1.25rem;
+    }
+    .rule-card  { padding: 1.5rem 1.25rem; }
+    .quote-block{ padding: 1.5rem 1.25rem; }
+    .decree-scroll { padding: 4rem 1.25rem 2rem 1.25rem; }
+    .decree-item { padding: 1.4rem 1.1rem; }
+
+    /* Long words wrap instead of overflowing */
+    .main-title,
+    .section-title,
+    .decree-title,
+    .dracarys-title {
+        word-break: break-word;
+    }
+    .main-title   { font-size: 2.2rem; }
+    .section-title{ font-size: 2rem;   }
+
+    /* Tables scroll inside their own container, not the page */
+    .derived-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+    }
+    .derived-table { min-width: 520px; }
+
+    /* Rubric → single column */
+    .rubric-row             { grid-template-columns: 1fr; }
+    .rubric-cell            { border-right: none; border-bottom: 1px solid var(--border-color); }
+    .rubric-cell:last-child { border-bottom: none; }
+    .rubric-row-header      { display: none; }
+
+    /* Misc small-screen trims */
+    .loader-bar-wrapper { width: 100%; max-width: 260px; }
+    .loader-title       { font-size: 2rem;   letter-spacing: 4px; }
+    .loader-subtitle    { font-size: 0.75rem;letter-spacing: 2px; }
+    .dracarys-title     { font-size: 2.5rem; letter-spacing: 6px; }
+    .dracarys-quote     { padding: 1rem 1.25rem; }
+    .navbar             { padding: 1rem 1.25rem; }
+    .targaryen-crest    { width: 40px; height: 40px; }
+    .logo h1            { font-size: 1.1rem; }
+    .space-track        { height: 160px; }
+    .score-display      { padding: 0.8rem 1.25rem; flex-wrap: wrap; justify-content: center; }
+}
+
+/* 3. Extra-narrow devices (older iPhone SE, small Androids) */
+@media (max-width: 400px) {
+    .section,
+    .performance-task-section { padding: 4rem 1rem; }
+    .main-title    { font-size: 1.8rem; }
+    .section-title { font-size: 1.7rem; }
+    .staircase     { gap: 2px; }
+    .step          { width: 34px; }
+    .step span     { font-size: 0.6rem; }
+    .step small    { font-size: 0.45rem; }
+    .decree-title  { font-size: 1.3rem; }
+    .loader-title  { font-size: 1.6rem; letter-spacing: 3px; }
+    .dracarys-title{ font-size: 2rem;   letter-spacing: 4px; }
+    .target-circle.outer  { width: 180px; height: 180px; }
+    .target-circle.middle { width: 110px; height: 110px; }
+    .target-circle.inner  { width: 40px;  height: 40px;  }
+}
