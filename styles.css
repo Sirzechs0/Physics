@@ -2514,3 +2514,95 @@ input:focus-visible,
     letter-spacing: 2px;
     text-transform: uppercase;
 }
+
+/* ==========================================================================
+   MOBILE BACKGROUNDS (mobile1.jpg ... mobile7.jpg)
+   ========================================================================== */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+    .hero-bg-placeholder {
+        background-image: url('mobile1.jpg');
+        background-position: center;
+        background-size: cover;
+        background-attachment: scroll;
+    }
+    #fundamentals {
+        background-image: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)), url('mobile2.jpg');
+        background-attachment: scroll;
+    }
+    #conversions {
+        background-image: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)), url('mobile3.jpg');
+        background-attachment: scroll;
+    }
+    #scientific-notation {
+        background-image: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)), url('mobile4.jpg');
+        background-attachment: scroll;
+    }
+    #accuracy {
+        background-image: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)), url('mobile5.jpg');
+        background-attachment: scroll;
+    }
+    #trials {
+        background-image: linear-gradient(rgba(12, 9, 8, 0.85), rgba(12, 9, 8, 0.85)), url('mobile6.jpg');
+        background-attachment: scroll;
+    }
+    .footer {
+        background-image: linear-gradient(rgba(6, 4, 3, 0.95), rgba(6, 4, 3, 0.95)), url('mobile7.jpg');
+        background-attachment: scroll;
+    }
+}
+
+/* ==========================================================================
+   EXTRA SMALL SCREENS (max-width: 480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.8rem 1rem;
+    }
+    .logo h1 {
+        font-size: 1rem;
+    }
+    .targaryen-crest {
+        width: 40px;
+        height: 40px;
+    }
+    .main-title {
+        font-size: 2rem;
+    }
+    .section {
+        padding: 4rem 1rem;
+    }
+    .section-title {
+        font-size: 1.8rem;
+    }
+    .staircase {
+        transform: scale(0.7);
+        transform-origin: left center;
+    }
+    .conversion-content {
+        gap: 2rem;
+    }
+    .trial-card {
+        padding: 1.5rem;
+    }
+    .decree-scroll {
+        padding: 3rem 1rem 2rem 1rem;
+    }
+    .decree-title {
+        font-size: 1.4rem;
+    }
+    .rubric-cell {
+        padding: 0.8rem;
+    }
+    .space-track {
+        height: 120px;
+    }
+    .earth-planet i {
+        font-size: 1.5rem;
+    }
+    .mars-planet i {
+        font-size: 1.2rem;
+    }
+    .spacecraft-marker {
+        font-size: 0.9rem;
+    }
+}
