@@ -2781,3 +2781,73 @@ body {
     .target-circle.middle { width: 110px; height: 110px; }
     .target-circle.inner  { width: 40px;  height: 40px;  }
 }
+
+/* ==========================================================================
+   FINAL DECREE MOBILE FIX (v3) — append to very bottom of styles.css
+   ========================================================================== */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+    /* 1. Force the grid to a single column */
+    .decree-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem !important;
+        width: 100% !important;
+    }
+
+    /* 2. Force the wide item to also take up only one column */
+    .decree-item-wide {
+        grid-column: span 1 !important;
+    }
+
+    /* 3. Ensure the scroll container fits inside the screen */
+    .decree-scroll {
+        padding: 3rem 1rem 1.5rem 1rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        border-radius: 8px;
+    }
+
+    /* 4. Prevent long words/URLs from pushing the container wider */
+    .decree-item, 
+    .decree-item p, 
+    .decree-item h4, 
+    .decree-list li,
+    .rubric-cell {
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
+        min-width: 0 !important;
+    }
+
+    /* 5. Fix the padding inside the decree items so text has room */
+    .decree-item {
+        padding: 1.25rem 1rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .decree-list li {
+        padding-left: 1.4rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* 6. Fix the Rubric Table so it stacks vertically instead of squishing */
+    .rubric-row {
+        grid-template-columns: 1fr !important;
+    }
+    .rubric-cell {
+        border-right: none !important;
+        border-bottom: 1px solid var(--border-color) !important;
+        padding: 0.8rem 1rem !important;
+    }
+    .rubric-cell:last-child {
+        border-bottom: none !important;
+    }
+    .rubric-row-header {
+        display: none !important;
+    }
+
+    /* 7. Slightly reduce the giant title so it fits better */
+    .decree-title {
+        font-size: 1.6rem !important;
+        letter-spacing: 2px !important;
+    }
+}
