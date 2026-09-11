@@ -8,11 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const loaderPercentage = document.getElementById('loaderPercentage');
 
     let progress = 0;
-    const minDisplayTime = 4500;
+    const minDisplayTime = 2200;
     const startTime = Date.now();
 
     const loadingInterval = setInterval(() => {
-        progress += Math.random() * 3 + 0.8;
+        progress += Math.random() * 4 + 1.4;
         
         if (progress >= 100) {
             progress = 100;
@@ -44,20 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => { loader.style.display = 'none'; }, 1200);
             }, 500);
         }
-    }, 10000);
+    }, 6000);
 
 
     // ======================================================================
     // 1. SCROLL PROGRESS BAR
     // ======================================================================
     const scrollProgress = document.getElementById('scrollProgress');
-    
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrollPercent = (scrollTop / scrollHeight) * 100;
-        scrollProgress.style.width = scrollPercent + '%';
-    });
 
 
     // ======================================================================
@@ -147,13 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. PARALLAX BACKGROUND
     // ======================================================================
     const heroBg = document.querySelector('.hero-bg-placeholder');
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY < window.innerHeight) {
-            let scrollY = window.pageYOffset;
-            heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
-        }
-    });
 
     // ======================================================================
     // 4. MOBILE NAVIGATION MENU
@@ -164,9 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hamburger) {
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            
+            const isOpen = navLinks.classList.contains('active');
+            hamburger.setAttribute('aria-expanded', String(isOpen));
+
             const spans = hamburger.querySelectorAll('span');
-            if (navLinks.classList.contains('active')) {
+            if (isOpen) {
                 spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
                 spans[1].style.opacity = '0';
                 spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
@@ -176,24 +164,59 @@ document.addEventListener('DOMContentLoaded', () => {
                 spans[2].style.transform = 'none';
             }
         });
+
+        hamburger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                hamburger.click();
+            }
+        });
     }
 
     // ======================================================================
     // 5. NAVBAR SCROLL EFFECT
     // ======================================================================
     const navbar = document.getElementById('navbar');
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.style.padding = '1rem 4rem';
-            navbar.style.backgroundColor = 'rgba(5, 5, 5, 0.95)';
-            navbar.style.borderBottom = '1px solid rgba(230, 0, 0, 0.2)';
-        } else {
-            navbar.style.padding = '1.5rem 4rem';
-            navbar.style.backgroundColor = 'rgba(10, 10, 12, 0.85)';
-            navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.08)';
+
+    // ======================================================================
+    // UNIFIED SCROLL HANDLER (progress bar + parallax + navbar state)
+    // One rAF-throttled listener drives all three so scrolling only ever
+    // does one layout read and one batch of style writes per frame.
+    // ======================================================================
+    let latestScrollY = window.pageYOffset || 0;
+    let scrollTicking = false;
+
+    function applyScrollEffects() {
+        const scrollTop = latestScrollY;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+        if (scrollProgress && scrollHeight > 0) {
+            const scrollPercent = Math.min(1, Math.max(0, scrollTop / scrollHeight));
+            scrollProgress.style.transform = `scaleX(${scrollPercent})`;
         }
-    });
+
+        if (heroBg && scrollTop < window.innerHeight) {
+            heroBg.style.transform = `translateY(${scrollTop * 0.3}px)`;
+        }
+
+        if (navbar) {
+            navbar.classList.toggle('scrolled', scrollTop > 50);
+        }
+
+        scrollTicking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        latestScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        if (!scrollTicking) {
+            scrollTicking = true;
+            requestAnimationFrame(applyScrollEffects);
+        }
+    }, { passive: true });
+
+    // Run once on load so the correct state shows even if the page
+    // opens already scrolled (e.g. returning via a same-page anchor).
+    applyScrollEffects();
 
     // ======================================================================
     // 6. SCROLL REVEAL ANIMATIONS
@@ -331,15 +354,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const points = parseInt(questionBlock.dataset.points);
             
             if (correctAnswers.includes(selectedText)) {
-                this.style.backgroundColor = 'rgba(0, 255, 0, 0.1)';
-                this.style.borderColor = '#00ff00';
-                this.style.color = '#00ff00';
+                this.style.backgroundColor = 'rgba(201, 162, 39, 0.12)';
+                this.style.borderColor = 'var(--accent-gold)';
+                this.style.color = 'var(--accent-gold-bright)';
                 this.innerHTML = `${this.textContent} <i class="fas fa-check" style="float: right;"></i>`;
                 addScore(points, questionId);
             } else {
-                this.style.backgroundColor = 'rgba(230, 0, 0, 0.2)';
-                this.style.borderColor = '#e60000';
-                this.style.color = '#e60000';
+                this.style.backgroundColor = 'rgba(163, 39, 31, 0.2)';
+                this.style.borderColor = 'var(--accent-red)';
+                this.style.color = 'var(--accent-red-bright)';
                 this.innerHTML = `${this.textContent} <i class="fas fa-times" style="float: right;"></i>`;
             }
 
@@ -378,20 +401,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (isCorrect) {
-                inputField.style.borderColor = '#00ff00';
-                inputField.style.color = '#00ff00';
+                inputField.style.borderColor = 'var(--accent-gold)';
+                inputField.style.color = 'var(--accent-gold-bright)';
                 inputField.value = inputField.value + " ✓";
                 inputField.disabled = true;
                 this.disabled = true;
-                this.style.backgroundColor = 'rgba(0, 255, 0, 0.2)';
-                this.style.color = '#00ff00';
+                this.style.backgroundColor = 'rgba(201, 162, 39, 0.2)';
+                this.style.color = 'var(--accent-gold-bright)';
                 this.textContent = 'Correct!';
                 addScore(points, questionId);
             } else {
-                inputField.style.borderColor = '#e60000';
-                inputField.style.color = '#e60000';
-                this.style.backgroundColor = '#e60000';
-                this.style.color = '#fff';
+                inputField.style.borderColor = 'var(--accent-red)';
+                inputField.style.color = 'var(--accent-red-bright)';
+                this.style.backgroundColor = 'var(--accent-red)';
+                this.style.color = 'var(--text-light)';
                 this.textContent = 'Try Again';
                 
                 setTimeout(() => {
