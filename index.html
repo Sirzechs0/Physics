@@ -17,10 +17,10 @@
         folder (next to index.html) and this will play it. Any filename
         works — just update the src below to match.
     -->
-    <audio id="bgMusic" loop preload="none">
-        <source src="theme-music.mp3" type="audio/mpeg">
-        Your browser does not support background audio.
-    </audio>
+    <audio id="bgMusic" loop preload="auto">
+    <source src="theme-music.mp3" type="audio/mpeg">
+    Your browser does not support background audio.
+</audio>
 
     <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -101,6 +101,57 @@
             <li><a href="#trials" class="btn-nav">Trials</a></li>
         </ul>
 
+        <!-- The Maester's Archive: a glossary of key terms, opened as a panel -->
+        <div class="archive-control">
+            <button class="icon-toggle-btn" id="archiveToggle" aria-label="Open the Maester's Archive (glossary of terms)" aria-expanded="false" title="The Maester's Archive">
+                <i class="fas fa-book"></i>
+            </button>
+            <div class="archive-panel" id="archivePanel" role="group" aria-label="The Maester's Archive, a glossary of terms">
+                <div class="archive-panel-header">
+                    <h3><i class="fas fa-book"></i> The Maester's Archive</h3>
+                    <button class="archive-close-btn" id="archiveCloseBtn" aria-label="Close the archive">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="archive-entry">
+                    <p class="archive-term">Fundamental Quantity</p>
+                    <p class="archive-def">Cannot be defined in terms of any other physical quantity. The SI system recognizes seven: length, mass, time, electric current, temperature, amount of substance, and luminous intensity.</p>
+                </div>
+                <div class="archive-entry">
+                    <p class="archive-term">Derived Quantity</p>
+                    <p class="archive-def">Built by combining two or more fundamental quantities, such as speed (length ÷ time) or density (mass ÷ volume).</p>
+                </div>
+                <div class="archive-entry">
+                    <p class="archive-term">SI Unit</p>
+                    <p class="archive-def">The standardized unit for a quantity under the International System of Units, chosen so measurements can be compared anywhere in the world.</p>
+                </div>
+                <div class="archive-entry">
+                    <p class="archive-term">Factor-Label Method</p>
+                    <p class="archive-def">Also called dimensional analysis. Convert a measurement by multiplying it by conversion factors — fractions equal to 1 — arranged so the unwanted units cancel out.</p>
+                </div>
+                <div class="archive-entry">
+                    <p class="archive-term">Scientific Notation</p>
+                    <p class="archive-def">Writes very large or very small numbers as a coefficient between 1 and 10 multiplied by a power of 10 — for example, 4.5 × 10⁷.</p>
+                </div>
+                <div class="archive-entry">
+                    <p class="archive-term">Accuracy</p>
+                    <p class="archive-def">How close a measurement is to the true or accepted value.</p>
+                </div>
+                <div class="archive-entry">
+                    <p class="archive-term">Precision</p>
+                    <p class="archive-def">How close repeated measurements are to one another, regardless of whether they're close to the true value.</p>
+                </div>
+                <div class="archive-entry">
+                    <p class="archive-term">Significant Figures</p>
+                    <p class="archive-def">The digits in a measurement that carry real meaning and reflect the precision of the instrument that produced them.</p>
+                </div>
+                <div class="archive-entry">
+                    <p class="archive-term">Percent Error</p>
+                    <p class="archive-def">|Experimental − Accepted| ÷ Accepted × 100% — a measure of how far a result strays from the accepted answer.</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Single audio control: opens a small panel with volume + music toggle -->
         <div class="audio-control">
             <button class="icon-toggle-btn" id="audioToggle" aria-label="Audio settings" aria-expanded="false" aria-pressed="false" title="Audio settings">
@@ -125,6 +176,19 @@
             <span></span>
             <span></span>
         </div>
+    </nav>
+
+    <!-- The Realm's Path: jump to any section, and see which one you're in.
+         Hidden on narrow/short viewports (see styles.css) where the
+         hamburger menu already covers navigation. -->
+    <nav class="realm-path" id="realmPath" aria-label="Jump to a section">
+        <a href="#hero" class="realm-path-dot active" data-section="hero" aria-label="Overview"><span class="realm-path-tooltip">Overview</span></a>
+        <a href="#fundamentals" class="realm-path-dot" data-section="fundamentals" aria-label="The Seven Kingdoms"><span class="realm-path-tooltip">The Seven</span></a>
+        <a href="#conversions" class="realm-path-dot" data-section="conversions" aria-label="The Great Conversion"><span class="realm-path-tooltip">Conversion</span></a>
+        <a href="#scientific-notation" class="realm-path-dot" data-section="scientific-notation" aria-label="Dragon Fire, Scientific Notation"><span class="realm-path-tooltip">Dragon Fire</span></a>
+        <a href="#accuracy" class="realm-path-dot" data-section="accuracy" aria-label="Truth and Honor, Accuracy and Precision"><span class="realm-path-tooltip">Truth & Honor</span></a>
+        <a href="#trials" class="realm-path-dot" data-section="trials" aria-label="The Trials"><span class="realm-path-tooltip">Trials</span></a>
+        <a href="#performance-task" class="realm-path-dot" data-section="performance-task" aria-label="The Final Decree"><span class="realm-path-tooltip">Final Decree</span></a>
     </nav>
 
     <!-- Hero Section -->
@@ -540,6 +604,10 @@
                         <i class="fas fa-crown"></i>
                         <span>Trial Champion</span>
                     </div>
+                    <div class="achievement-badge" data-achievement="archive">
+                        <i class="fas fa-book"></i>
+                        <span>Keeper of Records</span>
+                    </div>
                 </div>
             </div>
 
@@ -742,6 +810,12 @@
                 <div class="decree-footer">
                     <p class="decree-signature">"Fire and Blood, and the Truth of the Measure."</p>
                     <p class="decree-sealed">— Sealed by the Maesters of the Citadel</p>
+                </div>
+
+                <div class="decree-actions">
+                    <button class="btn btn-secondary print-decree-btn" id="printDecreeBtn" type="button">
+                        <i class="fas fa-print"></i> Print This Decree
+                    </button>
                 </div>
             </div>
         </section>

@@ -325,12 +325,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalScore = 0;
     const answeredQuestions = new Set();
 
-    const correctAnswers = [
-        "fundamental quantity", 
-        "factor-label method",
-        "false", 
-        "true"   
-    ];
+    // Keyed by question ID rather than one flat list of valid strings —
+    // otherwise "true" and "false" being correct answers to DIFFERENT
+    // questions (q3 and q4) would let either button on either question
+    // register as correct, no matter which one was actually clicked.
+    const correctAnswers = {
+        q1: "fundamental quantity",
+        q2: "factor-label method",
+        q3: "false",
+        q4: "true"
+    };
+
+    // Free-response questions (q5, q6), also keyed by ID instead of
+    // sniffing the input's placeholder text — so a future q7/q8 can't
+    // collide with an existing check the way the placeholder trick could.
+    const freeResponseAnswers = {
+        q5: (answer) => ['3200', '3200m', '3,200', '3,200m'].includes(answer),
+        q6: (answer) => answer.includes('6.4') && (answer.includes('10^6') || answer.includes('e6') || answer.includes('10**6'))
+    };
 
     function addScore(points, questionId) {
         if (answeredQuestions.has(questionId)) return;
@@ -353,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const questionId = questionBlock.dataset.questionId;
             const points = parseInt(questionBlock.dataset.points);
             
-            if (correctAnswers.includes(selectedText)) {
+            if (correctAnswers[questionId] === selectedText) {
                 this.style.backgroundColor = 'rgba(201, 162, 39, 0.12)';
                 this.style.borderColor = 'var(--accent-gold)';
                 this.style.color = 'var(--accent-gold-bright)';
@@ -388,17 +400,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const questionId = questionBlock.dataset.questionId;
             const points = parseInt(questionBlock.dataset.points);
             
-            let isCorrect = false;
-
-            if (inputField.placeholder.includes('e.g.')) {
-                if (userAnswer.includes('6.4') && (userAnswer.includes('10^6') || userAnswer.includes('e6') || userAnswer.includes('10**6'))) {
-                    isCorrect = true;
-                }
-            } else {
-                if (userAnswer === '3200' || userAnswer === '3200m' || userAnswer === '3,200' || userAnswer === '3,200m') {
-                    isCorrect = true;
-                }
-            }
+            const checkAnswer = freeResponseAnswers[questionId];
+            const isCorrect = checkAnswer ? checkAnswer(userAnswer) : false;
 
             if (isCorrect) {
                 inputField.style.borderColor = 'var(--accent-gold)';
@@ -613,7 +616,8 @@ document.addEventListener('DOMContentLoaded', () => {
         notation: { title: 'Tamer of Dragonfire', icon: 'fa-dragon' },
         aim: { title: 'True Aim', icon: 'fa-crosshairs' },
         truth: { title: 'Keeper of Truth', icon: 'fa-vial' },
-        perfect: { title: 'Trial Champion', icon: 'fa-crown' }
+        perfect: { title: 'Trial Champion', icon: 'fa-crown' },
+        archive: { title: 'Keeper of Records', icon: 'fa-book' }
     };
 
     let unlockedAchievements = new Set();
@@ -1146,5 +1150,88 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateAudioToggleIcon();
+
+    // ======================================================================
+    // 20. THE MAESTER'S ARCHIVE — glossary panel (mirrors the audio panel's
+    // open/close pattern above) plus a "Keeper of Records" sigil for
+    // opening it for the first time.
+    // ======================================================================
+    const archiveToggle = document.getElementById('archiveToggle');
+    const archivePanel = document.getElementById('archivePanel');
+    const archiveCloseBtn = document.getElementById('archiveCloseBtn');
+
+    function closeArchivePanel() {
+        if (archivePanel) archivePanel.classList.remove('open');
+        if (archiveToggle) archiveToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    if (archiveToggle && archivePanel) {
+        archiveToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = archivePanel.classList.toggle('open');
+            archiveToggle.setAttribute('aria-expanded', String(isOpen));
+            if (isOpen) {
+                closeAudioPanel();
+                unlockAchievement('archive');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (archivePanel.classList.contains('open') &&
+                !archivePanel.contains(e.target) &&
+                e.target !== archiveToggle &&
+                !archiveToggle.contains(e.target)) {
+                closeArchivePanel();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && archivePanel.classList.contains('open')) {
+                closeArchivePanel();
+            }
+        });
+    }
+
+    if (archiveCloseBtn) archiveCloseBtn.addEventListener('click', closeArchivePanel);
+
+    // Close the archive whenever the audio panel opens, so the two never
+    // end up open on top of each other in the corner of the screen.
+    if (audioToggle && audioPanel) {
+        audioToggle.addEventListener('click', () => {
+            if (audioPanel.classList.contains('open')) closeArchivePanel();
+        });
+    }
+
+    // ======================================================================
+    // 21. PRINT THE FINAL DECREE
+    // ======================================================================
+    const printDecreeBtn = document.getElementById('printDecreeBtn');
+    if (printDecreeBtn) {
+        printDecreeBtn.addEventListener('click', () => window.print());
+    }
+
+    // ======================================================================
+    // 22. THE REALM'S PATH — waypoint nav lights up whichever section is
+    // currently in view. Clicking a dot is already handled by the
+    // smooth-scroll handler earlier in this file (it matches any
+    // a[href^="#"]); this block only tracks which dot should be lit.
+    // ======================================================================
+    const realmPathDots = document.querySelectorAll('.realm-path-dot');
+    if (realmPathDots.length) {
+        const trackedIds = ['hero', 'fundamentals', 'conversions', 'scientific-notation', 'accuracy', 'trials', 'performance-task'];
+        const trackedSections = trackedIds.map(id => document.getElementById(id)).filter(Boolean);
+
+        const setActiveDot = (id) => {
+            realmPathDots.forEach(dot => dot.classList.toggle('active', dot.dataset.section === id));
+        };
+
+        const pathObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) setActiveDot(entry.target.id);
+            });
+        }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+        trackedSections.forEach(section => pathObserver.observe(section));
+    }
 
 });
