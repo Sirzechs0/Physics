@@ -12,6 +12,16 @@
 </head>
 <body>
 
+    <!--
+        BACKGROUND MUSIC: drop an mp3 named "theme-music.mp3" in this same
+        folder (next to index.html) and this will play it. Any filename
+        works — just update the src below to match.
+    -->
+    <audio id="bgMusic" loop preload="none">
+        <source src="theme-music.mp3" type="audio/mpeg">
+        Your browser does not support background audio.
+    </audio>
+
     <div class="scroll-progress" id="scrollProgress"></div>
 
     <!-- LOADING SCREEN -->
@@ -76,7 +86,7 @@
         <div class="ember"></div>
     </div>
 
-    <!-- Navigation -->
+        <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="logo">
             <img src="targaryen-crest.png" alt="Targaryen Crest" class="targaryen-crest">
@@ -90,6 +100,26 @@
             <li><a href="#accuracy">Truth & Honor</a></li>
             <li><a href="#trials" class="btn-nav">Trials</a></li>
         </ul>
+
+        <!-- Single audio control: opens a small panel with volume + music toggle -->
+        <div class="audio-control">
+            <button class="icon-toggle-btn" id="audioToggle" aria-label="Audio settings" aria-expanded="false" aria-pressed="false" title="Audio settings">
+                <i class="fas fa-volume-low"></i>
+            </button>
+            <div class="audio-panel" id="audioPanel" role="group" aria-label="Audio settings">
+                <div class="audio-row">
+                    <span class="audio-label">Volume</span>
+                    <span class="audio-value" id="volumeValue">50%</span>
+                </div>
+                <input type="range" id="volumeSlider" class="audio-slider" min="0" max="100" step="1" value="50" aria-label="Volume">
+                <div class="audio-row audio-toggles">
+                    <button class="audio-mini-btn" id="musicToggle" aria-label="Toggle background music" aria-pressed="false" title="Play background music">
+                        <i class="fas fa-music"></i><span>Music</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="hamburger" role="button" tabindex="0" aria-label="Toggle navigation menu" aria-expanded="false">
             <span></span>
             <span></span>
@@ -189,12 +219,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>Area</td><td>length × length</td><td>m²</td></tr>
-                            <tr><td>Volume</td><td>length × length × length</td><td>m³</td></tr>
-                            <tr><td>Speed / Velocity</td><td>length ÷ time</td><td>m/s</td></tr>
-                            <tr><td>Acceleration</td><td>velocity ÷ time</td><td>m/s²</td></tr>
-                            <tr><td>Density</td><td>mass ÷ volume</td><td>kg/m³</td></tr>
-                            <tr><td>Force (Weight)</td><td>mass × acceleration</td><td>N (kg·m/s²)</td></tr>
+                            <tr>
+                                <td>Area</td>
+                                <td>length × length</td>
+                                <td>m²</td>
+                            </tr>
+                            <tr>
+                                <td>Volume</td>
+                                <td>length × length × length</td>
+                                <td>m³</td>
+                            </tr>
+                            <tr>
+                                <td>Speed / Velocity</td>
+                                <td>length ÷ time</td>
+                                <td>m/s</td>
+                            </tr>
+                            <tr>
+                                <td>Acceleration</td>
+                                <td>velocity ÷ time</td>
+                                <td>m/s²</td>
+                            </tr>
+                            <tr>
+                                <td>Density</td>
+                                <td>mass ÷ volume</td>
+                                <td>kg/m³</td>
+                            </tr>
+                            <tr>
+                                <td>Force (Weight)</td>
+                                <td>mass × acceleration</td>
+                                <td>N (kg·m/s²)</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -227,15 +281,36 @@
 
                 <div class="conversion-visual">
                     <div class="staircase" id="animatedStaircase">
-                        <div class="step step-kilo" data-step="7"><span>k</span><small>×1000</small></div>
-                        <div class="step step-hecto" data-step="6"><span>h</span><small>×100</small></div>
-                        <div class="step step-deka" data-step="5"><span>da</span><small>×10</small></div>
-                        <div class="step step-base" data-step="4"><span>m / g / L</span><small>×1</small></div>
-                        <div class="step step-deci" data-step="3"><span>d</span><small>×0.1</small></div>
-                        <div class="step step-centi" data-step="2"><span>c</span><small>×0.01</small></div>
-                        <div class="step step-milli" data-step="1"><span>m</span><small>×0.001</small></div>
+                        <div class="step step-kilo" data-step="7" data-exp="3"><span>k</span><small>×1000</small><small class="step-result"></small></div>
+                        <div class="step step-hecto" data-step="6" data-exp="2"><span>h</span><small>×100</small><small class="step-result"></small></div>
+                        <div class="step step-deka" data-step="5" data-exp="1"><span>da</span><small>×10</small><small class="step-result"></small></div>
+                        <div class="step step-base" data-step="4" data-exp="0"><span>m / g / L</span><small>×1</small><small class="step-result"></small></div>
+                        <div class="step step-deci" data-step="3" data-exp="-1"><span>d</span><small>×0.1</small><small class="step-result"></small></div>
+                        <div class="step step-centi" data-step="2" data-exp="-2"><span>c</span><small>×0.01</small><small class="step-result"></small></div>
+                        <div class="step step-milli" data-step="1" data-exp="-3"><span>m</span><small>×0.001</small><small class="step-result"></small></div>
                     </div>
                 </div>
+            </div>
+
+            <div class="tool-card converter-tool" id="converterTool">
+                <div class="tool-header">
+                    <h3><i class="fas fa-scroll"></i> Try It Yourself: The Measure of the Realm</h3>
+                    <p>Enter a value, name its unit, and the staircase above will light up with its equivalent at every scale.</p>
+                </div>
+                <div class="tool-input-row">
+                    <input type="number" id="converterValue" class="trial-input" placeholder="e.g. 3.2" step="any" inputmode="decimal" aria-label="Value to convert">
+                    <select id="converterUnit" class="tool-select" aria-label="Starting unit">
+                        <option value="3">kilo (k)</option>
+                        <option value="2">hecto (h)</option>
+                        <option value="1">deka (da)</option>
+                        <option value="0" selected>base (m / g / L)</option>
+                        <option value="-1">deci (d)</option>
+                        <option value="-2">centi (c)</option>
+                        <option value="-3">milli (m)</option>
+                    </select>
+                    <button class="btn btn-primary" id="converterBtn">Convert</button>
+                </div>
+                <p class="tool-hint" id="converterHint">Tip: try 3.2 at "kilo" — it's the same number the Mars Orbiter case study uses below.</p>
             </div>
 
             <div class="case-study-card">
@@ -317,6 +392,18 @@
                     <p class="example">(8.0 × 10<sup>8</sup>) ÷ (2.0 × 10<sup>3</sup>) = 4.0 × 10<sup>5</sup></p>
                 </div>
             </div>
+
+            <div class="tool-card notation-tool" id="notationTool">
+                <div class="tool-header">
+                    <h3><i class="fas fa-dragon"></i> Try It Yourself: Feed the Dragon a Number</h3>
+                    <p>Type any large or small number and watch it get forged into scientific notation.</p>
+                </div>
+                <div class="tool-input-row">
+                    <input type="number" id="notationInput" class="trial-input" placeholder="e.g. 45000000 or 0.00032" step="any" inputmode="decimal" aria-label="Number to convert to scientific notation">
+                    <button class="btn btn-primary" id="notationBtn">Convert</button>
+                </div>
+                <div class="notation-result" id="notationResult" aria-live="polite"></div>
+            </div>
         </section>
 
         <!-- Section 4: Accuracy and Precision -->
@@ -350,6 +437,25 @@
                 </div>
             </div>
 
+            <div class="tool-card aim-tool" id="aimTool">
+                <div class="tool-header">
+                    <h3><i class="fas fa-crosshairs"></i> Take Aim Yourself</h3>
+                    <p id="aimInstructions">Click the target three times to fire your arrows, then see what your grouping reveals.</p>
+                </div>
+                <div class="aim-layout">
+                    <div class="target-visual aim-target" id="aimTarget" role="button" tabindex="0" aria-label="Click within this target three times to fire arrows">
+                        <div class="target-circle outer"></div>
+                        <div class="target-circle middle"></div>
+                        <div class="target-circle inner"></div>
+                    </div>
+                    <div class="aim-panel">
+                        <div class="aim-status" id="aimStatus">Shots fired: <span id="aimShotCount">0</span> / 3</div>
+                        <div class="aim-verdict" id="aimVerdict"></div>
+                        <button class="btn btn-secondary aim-reset" id="aimResetBtn">Fire Again</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="significant-figures">
                 <h3>Significant Figures</h3>
                 <p>Digits that carry real meaning and reflect the precision of the instrument.</p>
@@ -368,6 +474,33 @@
                 </div>
                 <p class="example">If water boils at 98.5°C (accepted is 100°C): |98.5 - 100| ÷ 100 × 100% = <span class="text-red">1.5% error</span></p>
             </div>
+
+            <div class="tool-card precision-tool" id="precisionTool">
+                <div class="tool-header">
+                    <h3><i class="fas fa-vial"></i> Try It Yourself: Analyze Your Trials</h3>
+                    <p>Enter three trial measurements and the accepted value to check accuracy and precision together — the same math your Field Metrology report will need.</p>
+                </div>
+                <div class="precision-inputs">
+                    <div class="precision-field">
+                        <label for="trial1">Trial 1</label>
+                        <input type="number" id="trial1" class="trial-input" step="any" inputmode="decimal">
+                    </div>
+                    <div class="precision-field">
+                        <label for="trial2">Trial 2</label>
+                        <input type="number" id="trial2" class="trial-input" step="any" inputmode="decimal">
+                    </div>
+                    <div class="precision-field">
+                        <label for="trial3">Trial 3</label>
+                        <input type="number" id="trial3" class="trial-input" step="any" inputmode="decimal">
+                    </div>
+                    <div class="precision-field">
+                        <label for="acceptedValue">Accepted Value</label>
+                        <input type="number" id="acceptedValue" class="trial-input" step="any" inputmode="decimal">
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="precisionBtn">Analyze</button>
+                <div class="precision-result" id="precisionResult" aria-live="polite"></div>
+            </div>
         </section>
 
         <!-- Section 5: Interactive Trials -->
@@ -381,6 +514,32 @@
                     <span class="score-label">Score:</span>
                     <span class="score-value" id="scoreValue">0</span>
                     <span class="score-max">/ 8</span>
+                </div>
+            </div>
+
+            <div class="achievements-panel" id="achievementsPanel">
+                <h3 class="achievements-title">Sigils of the Realm</h3>
+                <div class="achievements-grid" id="achievementsGrid">
+                    <div class="achievement-badge" data-achievement="converter">
+                        <i class="fas fa-ruler-combined"></i>
+                        <span>Master of Conversion</span>
+                    </div>
+                    <div class="achievement-badge" data-achievement="notation">
+                        <i class="fas fa-dragon"></i>
+                        <span>Tamer of Dragonfire</span>
+                    </div>
+                    <div class="achievement-badge" data-achievement="aim">
+                        <i class="fas fa-crosshairs"></i>
+                        <span>True Aim</span>
+                    </div>
+                    <div class="achievement-badge" data-achievement="truth">
+                        <i class="fas fa-vial"></i>
+                        <span>Keeper of Truth</span>
+                    </div>
+                    <div class="achievement-badge" data-achievement="perfect">
+                        <i class="fas fa-crown"></i>
+                        <span>Trial Champion</span>
+                    </div>
                 </div>
             </div>
 
@@ -623,6 +782,18 @@
             <p>&copy; 2026 Targaryen Physics. All rights reserved.</p>
         </div>
     </footer>
+
+    <div class="achievement-toast" id="achievementToast" role="status" aria-live="polite">
+        <i class="fas fa-crown toast-icon" id="toastIcon"></i>
+        <div class="toast-text">
+            <span class="toast-label">Sigil Earned</span>
+            <span class="toast-title" id="toastTitle"></span>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top of page">
+        <i class="fas fa-dragon"></i>
+    </button>
 
     <script src="script.js"></script>
 </body>
