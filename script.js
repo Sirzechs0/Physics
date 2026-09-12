@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ======================================================================
     // 6. SCROLL REVEAL ANIMATIONS
     // ======================================================================
-    const revealElements = document.querySelectorAll('.card, .trial-card, .section-header, .case-study-card, .notation-card, .definition-card, .significant-figures, .percent-error, .performance-task-section');
+    const revealElements = document.querySelectorAll('.card, .trial-card, .section-header, .case-study-card, .notation-card, .definition-card, .significant-figures, .percent-error');
 
     const revealOptions = {
         threshold: 0.15,

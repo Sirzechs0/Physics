@@ -3388,3 +3388,328 @@ input:focus-visible,
         padding: 1.2rem 1rem;
     }
 }
+
+/* ==========================================================================
+   MOBILE POLISH — compact header, tighter type, Final Decree fit,
+   and FIXED backgrounds (same "stay in place" concept as desktop).
+   Placed last so it overrides the earlier mobile blocks.
+   ========================================================================== */
+@media (max-width: 768px) {
+
+    /* ---------- 1. Compact header ---------- */
+    .navbar {
+        padding: 0.85rem 1rem;
+        gap: 0.6rem;
+    }
+
+    .navbar.scrolled {
+        padding-top: 0.7rem;
+        padding-bottom: 0.7rem;
+    }
+
+    .logo {
+        gap: 9px;
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .targaryen-crest {
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+    }
+
+    .logo h1 {
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.1;
+    }
+
+    .audio-control {
+        margin-left: 0;
+        flex-shrink: 0;
+    }
+
+    .icon-toggle-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+
+    .hamburger {
+        flex-shrink: 0;
+    }
+
+    .hamburger span {
+        width: 20px;
+    }
+
+    /* Dropdown menu spacing */
+    .nav-links {
+        padding: 1.25rem 1rem;
+        gap: 1rem;
+    }
+
+    .nav-links li a {
+        font-size: 0.82rem;
+        letter-spacing: 0.8px;
+    }
+
+    /* ---------- 2. Tighter typography everywhere ---------- */
+    .subtitle {
+        font-size: 0.78rem;
+        letter-spacing: 2.2px;
+        margin-bottom: 0.7rem;
+    }
+
+    .main-title {
+        font-size: 2.15rem;
+        line-height: 1.15;
+        margin-bottom: 1rem;
+        letter-spacing: 0.5px;
+    }
+
+    .hero-description {
+        font-size: 0.97rem;
+        line-height: 1.55;
+        margin-bottom: 1.8rem;
+        padding: 0 0.5rem;
+    }
+
+    .hero-cta { gap: 0.7rem; }
+
+    .btn {
+        padding: 0.85rem 1.4rem;
+        font-size: 0.82rem;
+        letter-spacing: 1.4px;
+    }
+
+    .scroll-indicator {
+        bottom: 1rem;
+        font-size: 0.7rem;
+        letter-spacing: 1.4px;
+    }
+
+    .section { padding: 4.5rem 1.1rem; }
+    .section-header { margin-bottom: 2.5rem; }
+
+    .section-title {
+        font-size: 1.85rem;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.4rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.8rem;
+        letter-spacing: 1.8px;
+        margin-bottom: 1rem;
+    }
+
+    .section-intro {
+        font-size: 0.97rem;
+        line-height: 1.55;
+    }
+
+    .quote-block .quote-text { font-size: 1rem; line-height: 1.6; }
+
+    .tool-header h3 {
+        font-size: 1.05rem;
+        line-height: 1.3;
+        flex-wrap: wrap;
+    }
+
+    .tool-header p { font-size: 0.94rem; }
+
+    /* ---------- 3. Final Decree — fit the phone ---------- */
+    .performance-task-section { padding: 4rem 0.9rem; }
+
+    .decree-scroll {
+        padding: 3.5rem 1rem 1.75rem 1rem;
+        border-radius: 8px;
+    }
+
+    .decree-scroll::before,
+    .decree-scroll::after {
+        width: 20px;
+        height: 20px;
+        border-width: 1.5px;
+    }
+
+    .decree-seal {
+        top: -36px;
+        width: 72px;
+        height: 72px;
+    }
+
+    .seal-image { width: 64px; height: 64px; border-width: 2px; }
+    .seal-ring { inset: -5px; border-width: 1.5px; }
+
+    .decree-header {
+        margin-top: 1.4rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .decree-preamble {
+        font-size: 0.7rem;
+        letter-spacing: 2.2px;
+        margin-bottom: 0.7rem;
+    }
+
+    .decree-title {
+        font-size: 1.2rem;
+        letter-spacing: 0.8px;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+
+    .decree-divider i { font-size: 1.15rem; }
+
+    .decree-grid {
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .decree-item,
+    .decree-item-wide {
+        grid-column: span 1;
+        padding: 1.1rem 0.9rem;
+    }
+
+    .decree-item:hover { transform: none; }
+
+    .decree-item-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .decree-item h4 {
+        font-size: 0.88rem;
+        letter-spacing: 1.3px;
+        margin-bottom: 0.5rem;
+    }
+
+    .decree-item p,
+    .decree-list li {
+        font-size: 0.9rem;
+        line-height: 1.55;
+    }
+
+    .decree-list li {
+        padding: 0.45rem 0 0.45rem 1.5rem;
+    }
+
+    .decree-list li::before { font-size: 0.85rem; }
+
+    .decree-scenarios {
+        padding: 1.1rem 0.8rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .scenarios-title {
+        font-size: 0.85rem;
+        letter-spacing: 1.3px;
+        margin-bottom: 1rem;
+    }
+
+    .scenario-grid {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+
+    .scenario-card { padding: 1rem 0.85rem; }
+    .scenario-card i { font-size: 1.35rem; margin-bottom: 0.4rem; }
+    .scenario-card p { font-size: 0.85rem; }
+
+    .rubric-title {
+        font-size: 0.85rem;
+        letter-spacing: 1.3px;
+        margin-bottom: 1rem;
+    }
+
+    .rubric-row {
+        grid-template-columns: 1fr;
+    }
+
+    .rubric-row-header { display: none; }
+
+    .rubric-cell {
+        font-size: 0.83rem;
+        padding: 0.65rem 0.85rem;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        line-height: 1.5;
+    }
+
+    .rubric-row .rubric-cell:last-child { border-bottom: none; }
+
+    /* Since the header row is hidden, label each cell inline */
+    .rubric-row .rubric-cell:nth-child(1)::before {
+        content: 'Criteria: ';
+        color: var(--accent-red-bright);
+        font-weight: 700;
+    }
+    .rubric-row .rubric-cell:nth-child(2)::before {
+        content: 'Points: ';
+        color: var(--accent-red-bright);
+        font-weight: 700;
+    }
+    .rubric-row .rubric-cell:nth-child(3)::before {
+        content: 'Description: ';
+        color: var(--accent-red-bright);
+        font-weight: 700;
+    }
+
+    .decree-footer { padding-top: 1.3rem; }
+
+    .decree-signature {
+        font-size: 0.98rem;
+        letter-spacing: 1.8px;
+    }
+
+    .decree-sealed {
+        font-size: 0.72rem;
+        letter-spacing: 1.3px;
+    }
+
+    /* ---------- Backgrounds — pinned like desktop ---------- */
+    .hero-bg-placeholder {
+        background-image: url('mobile1.jpg');
+        background-position: center center;
+        background-size: cover;
+        top: -10%;
+        height: 120%;
+        opacity: 0.55;
+    }
+
+    #fundamentals {
+        background: linear-gradient(rgba(12, 9, 8, 0.82), rgba(12, 9, 8, 0.82)),
+                    url('mobile2.jpg') center center / cover no-repeat fixed;
+    }
+    #conversions {
+        background: linear-gradient(rgba(12, 9, 8, 0.82), rgba(12, 9, 8, 0.82)),
+                    url('mobile3.jpg') center center / cover no-repeat fixed;
+    }
+    #scientific-notation {
+        background: linear-gradient(rgba(12, 9, 8, 0.82), rgba(12, 9, 8, 0.82)),
+                    url('mobile4.jpg') center center / cover no-repeat fixed;
+    }
+    #accuracy {
+        background: linear-gradient(rgba(12, 9, 8, 0.82), rgba(12, 9, 8, 0.82)),
+                    url('mobile5.jpg') center center / cover no-repeat fixed;
+    }
+    #trials {
+        background: linear-gradient(rgba(12, 9, 8, 0.82), rgba(12, 9, 8, 0.82)),
+                    url('mobile6.jpg') center center / cover no-repeat fixed;
+    }
+    .footer {
+        background: linear-gradient(rgba(6, 4, 3, 0.94), rgba(6, 4, 3, 0.94)),
+                    url('mobile7.jpg') center center / cover no-repeat fixed;
+    }
+}
