@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Targaryen Physics | The Science of Measurement</title>
+    <meta name="description" content="An interactive Game of Thrones–themed lesson on Physics 1 measurement: fundamental and derived quantities, unit conversion, scientific notation, and accuracy vs. precision, with hands-on tools and trials.">
+    <meta name="theme-color" content="#0c0908">
+    <link rel="icon" type="image/png" href="targaryen-crest.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -353,6 +356,7 @@
                         <div class="step step-centi" data-step="2" data-exp="-2"><span>c</span><small>×0.01</small><small class="step-result"></small></div>
                         <div class="step step-milli" data-step="1" data-exp="-3"><span>m</span><small>×0.001</small><small class="step-result"></small></div>
                     </div>
+                    <p class="staircase-hint" id="staircaseHint" aria-live="polite">Click any step for a real-world example.</p>
                 </div>
             </div>
 
@@ -583,6 +587,12 @@
 
             <div class="achievements-panel" id="achievementsPanel">
                 <h3 class="achievements-title">Sigils of the Realm</h3>
+                <div class="achievements-progress" id="achievementsProgress">
+                    <div class="achievements-progress-track">
+                        <div class="achievements-progress-fill" id="achievementsProgressFill"></div>
+                    </div>
+                    <p class="achievements-progress-label" id="achievementsProgressLabel">0 / 6 Sigils Collected</p>
+                </div>
                 <div class="achievements-grid" id="achievementsGrid">
                     <div class="achievement-badge" data-achievement="converter">
                         <i class="fas fa-ruler-combined"></i>

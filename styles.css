@@ -222,6 +222,7 @@ input:focus-visible,
 }
 
 .logo:hover .targaryen-crest {
+    animation: none;
     transform: scale(1.1) rotate(5deg);
     filter: drop-shadow(0 0 15px rgba(163, 39, 31, 0.9));
     border-color: var(--accent-red-bright);
@@ -2304,6 +2305,35 @@ input:focus-visible,
     100% { opacity: 1; }
 }
 
+/* ---- Click-a-step example caption (sits below the staircase) ----
+   A plain line of body text, not a floating tooltip, so a full sentence
+   always has room to wrap and never runs off a narrow screen. */
+.staircase-hint {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-style: italic;
+    line-height: 1.5;
+    margin-top: 1.3rem;
+    padding: 0 1rem;
+    transition: color 0.3s ease;
+}
+
+.staircase-hint.active {
+    color: var(--text-light);
+    font-style: normal;
+    font-weight: 500;
+}
+
+/* The step you most recently clicked stays gently highlighted in gold —
+   the same "reference point" treatment as .origin-step above, kept as
+   its own class so it never touches .lit (used by the intro animation
+   and reserved for its own <small> color rule higher up this file). */
+.staircase .step.example-active {
+    border-color: var(--accent-gold-bright);
+    box-shadow: 0 0 15px var(--accent-gold-glow), inset 0 0 10px rgba(232, 197, 71, 0.2);
+}
+
 /* ==========================================================================
    TERM PERFORMANCE TASK — ROYAL DECREE SECTION
    ========================================================================== */
@@ -3524,6 +3554,11 @@ input:focus-visible,
 
     .tool-header p { font-size: 0.94rem; }
 
+    .staircase-hint {
+        font-size: 0.78rem;
+        margin-top: 1rem;
+    }
+
     /* ---------- 3. Final Decree — fit the phone ---------- */
     .performance-task-section { padding: 4rem 0.9rem; }
 
@@ -4004,6 +4039,135 @@ input:focus-visible,
 
 .print-decree-btn i {
     margin-right: 0.5rem;
+}
+
+/* ==========================================================================
+   HOLOGRAPHIC TILT — Kingdom cards & unlocked Sigils catch the light as
+   the cursor moves over them. The mousemove math lives in script.js;
+   these rules just render whatever it sets in --tilt-x / --tilt-y /
+   --glow-x / --glow-y. Skipped entirely on touch devices and reduced
+   motion (handled in JS, so these elements simply never gain the
+   .tilting class there).
+   ========================================================================== */
+.notation-card.tilt-card,
+.achievement-badge.tilt-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.tilt-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(255, 255, 255, 0.14), transparent 55%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.tilt-card.tilting::after {
+    opacity: 1;
+}
+
+.kingdom-card.tilting {
+    transition: transform 0.1s ease-out;
+    transform: perspective(900px) translateY(-10px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.03);
+}
+
+.notation-card.tilting {
+    transition: transform 0.1s ease-out;
+    transform: perspective(900px) translateY(-5px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.02);
+}
+
+.achievement-badge.tilting {
+    transition: transform 0.1s ease-out;
+    transform: perspective(700px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.1);
+    z-index: 3;
+}
+
+/* ==========================================================================
+   SIGILS PROGRESS BAR + "ALL COLLECTED" STATE
+   ========================================================================== */
+.achievements-progress {
+    max-width: 320px;
+    margin: 0 auto 2rem auto;
+}
+
+.achievements-progress-track {
+    width: 100%;
+    height: 8px;
+    background: var(--bg-darker);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.achievements-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent-red), var(--accent-gold-bright));
+    border-radius: 999px;
+    transition: width 0.6s var(--ease-premium);
+    box-shadow: 0 0 10px var(--accent-gold-glow);
+}
+
+.achievements-progress-label {
+    margin-top: 0.6rem;
+    font-size: 0.79rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.achievements-panel.all-collected {
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+    animation: allSigilsGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes allSigilsGlow {
+    0% { box-shadow: 0 0 20px var(--accent-gold-glow); }
+    100% { box-shadow: 0 0 40px var(--accent-gold-glow), 0 0 60px var(--accent-red-glow); }
+}
+
+.achievement-toast.grand {
+    border-color: var(--accent-gold-bright);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 45px var(--accent-gold-glow), 0 0 25px var(--accent-red-glow);
+}
+
+/* ==========================================================================
+   CURSOR EMBER TRAIL (hero section only)
+   ========================================================================== */
+.cursor-ember {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-gold-bright), var(--accent-red));
+    box-shadow: 0 0 6px var(--accent-gold-glow);
+    pointer-events: none;
+    z-index: 9998;
+    left: 0;
+    top: 0;
+    animation: cursorEmberRise 1.1s ease-out forwards;
+}
+
+@keyframes cursorEmberRise {
+    0% { transform: translate(-50%, -50%) translate(0, 0) scale(1); opacity: 0.85; }
+    100% { transform: translate(-50%, -50%) translate(var(--drift-x, 0px), -70px) scale(0.2); opacity: 0; }
+}
+
+/* ==========================================================================
+   IDLE CREST GLOW — a slow breathing glow on the nav crest so the page
+   feels alive even before anyone interacts with it. Paused on hover so
+   it doesn't fight with the existing hover glow above.
+   ========================================================================== */
+.targaryen-crest {
+    animation: crestBreathe 3.6s ease-in-out infinite;
+}
+
+@keyframes crestBreathe {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(163, 39, 31, 0.5)); }
+    50% { filter: drop-shadow(0 0 13px rgba(163, 39, 31, 0.9)); }
 }
 
 /* ==========================================================================

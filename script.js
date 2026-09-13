@@ -632,6 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     refreshAchievementBadges();
+    updateAchievementsProgress();
 
     const achievementToast = document.getElementById('achievementToast');
     const toastTitle = document.getElementById('toastTitle');
@@ -662,6 +663,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         showAchievementToast(id);
         playAchievementSound();
+
+        updateAchievementsProgress();
+        maybeCelebrateAllSigils();
     }
 
     // ======================================================================
@@ -793,6 +797,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         aimShots.push({ x, y, centerX: rect.width / 2, centerY: rect.height / 2, radius: rect.width / 2 });
         placeShotMarker((x / rect.width) * 100, (y / rect.height) * 100);
+        burstEmbers(clientX, clientY);
 
         if (aimShotCount) aimShotCount.textContent = String(aimShots.length);
 
@@ -1232,6 +1237,191 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
 
         trackedSections.forEach(section => pathObserver.observe(section));
+    }
+
+    // ======================================================================
+    // 23. SHARED FEATURE DETECTION + BUTTON EMBER BURST
+    // Two small media queries reused by the features below, plus a spark
+    // thrown from every primary button press. Quiz buttons already have
+    // their own correct/incorrect embers (section 17), so they're excluded
+    // here to avoid double-bursting on a correct answer.
+    // ======================================================================
+    const canHoverTilt = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    document.querySelectorAll('.btn:not(.btn-check), .btn-nav').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            if (prefersReducedMotion.matches) return;
+            burstEmbers(e.clientX, e.clientY);
+        });
+    });
+
+    // ======================================================================
+    // 24. HOLOGRAPHIC TILT — Kingdom cards and unlocked Sigils tilt toward
+    // the cursor and catch a soft moving highlight, like a foil trading
+    // card. Delegated to each grid's container (rather than bound per-card)
+    // so a Sigil that unlocks later automatically picks up the effect.
+    // Skipped on touch devices and when reduced motion is preferred.
+    // ======================================================================
+    function enableTiltDelegate(containerSelector, itemSelector, maxTilt) {
+        const container = document.querySelector(containerSelector);
+        if (!container) return;
+
+        container.addEventListener('mousemove', (e) => {
+            if (!canHoverTilt.matches || prefersReducedMotion.matches) return;
+            const card = e.target.closest(itemSelector);
+
+            container.querySelectorAll(itemSelector + '.tilting').forEach(el => {
+                if (el !== card) el.classList.remove('tilting');
+            });
+            if (!card) return;
+
+            const rect = card.getBoundingClientRect();
+            const px = (e.clientX - rect.left) / rect.width;
+            const py = (e.clientY - rect.top) / rect.height;
+            const tiltX = (0.5 - py) * maxTilt * 2;
+            const tiltY = (px - 0.5) * maxTilt * 2;
+
+            card.classList.add('tilt-card', 'tilting');
+            card.style.setProperty('--tilt-x', tiltX.toFixed(2) + 'deg');
+            card.style.setProperty('--tilt-y', tiltY.toFixed(2) + 'deg');
+            card.style.setProperty('--glow-x', (px * 100).toFixed(1) + '%');
+            card.style.setProperty('--glow-y', (py * 100).toFixed(1) + '%');
+        });
+
+        container.addEventListener('mouseleave', () => {
+            container.querySelectorAll(itemSelector + '.tilting').forEach(el => el.classList.remove('tilting'));
+        });
+    }
+
+    enableTiltDelegate('.seven-kingdoms-grid', '.kingdom-card', 9);
+    enableTiltDelegate('.notation-grid', '.notation-card', 7);
+    enableTiltDelegate('#achievementsGrid', '.achievement-badge.unlocked', 12);
+
+    // ======================================================================
+    // 25. SIGILS PROGRESS + "MASTER OF THE CITADEL" GRAND UNLOCK
+    // Extends the achievement system above with a live "X / 6" readout and
+    // a one-time celebration the moment every Sigil has been collected.
+    // ======================================================================
+    const ALL_SIGILS_KEY = 'targaryenPhysics.allSigilsCelebrated';
+
+    function updateAchievementsProgress() {
+        const total = Object.keys(achievementInfo).length;
+        const count = unlockedAchievements.size;
+        const fill = document.getElementById('achievementsProgressFill');
+        const label = document.getElementById('achievementsProgressLabel');
+        const panel = document.getElementById('achievementsPanel');
+
+        if (fill) fill.style.width = (count / total * 100) + '%';
+        if (label) label.textContent = `${count} / ${total} Sigils Collected`;
+        if (panel) panel.classList.toggle('all-collected', count === total);
+    }
+
+    function maybeCelebrateAllSigils() {
+        const total = Object.keys(achievementInfo).length;
+        if (unlockedAchievements.size < total) return;
+
+        let alreadyCelebrated = false;
+        try { alreadyCelebrated = localStorage.getItem(ALL_SIGILS_KEY) === 'true'; } catch (e) { /* ignore */ }
+        if (alreadyCelebrated) return;
+        try { localStorage.setItem(ALL_SIGILS_KEY, 'true'); } catch (e) { /* ignore */ }
+
+        setTimeout(() => {
+            const panel = document.getElementById('achievementsPanel');
+            if (panel) {
+                const rect = panel.getBoundingClientRect();
+                burstEmbers(rect.left + rect.width * 0.3, rect.top + 10);
+                burstEmbers(rect.left + rect.width * 0.7, rect.top + 10);
+            }
+            playDracarysSound();
+
+            if (achievementToast && toastTitle) {
+                toastTitle.textContent = 'Master of the Citadel — All Sigils Collected';
+                if (toastIcon) toastIcon.className = 'fas fa-award toast-icon';
+                achievementToast.classList.add('show', 'grand');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => achievementToast.classList.remove('show', 'grand'), 5000);
+            }
+        }, 900);
+    }
+
+    // ======================================================================
+    // 26. CLICK A STEP — the metric staircase now shows a quick real-world
+    // example for whichever prefix is clicked. This writes into a caption
+    // line below the staircase (#staircaseHint) rather than the tiny
+    // per-step tooltip, which is sized for short numbers like "3,200" and
+    // has no room for a full sentence on a narrow phone screen.
+    // ======================================================================
+    const stepExamples = {
+        '3': 'e.g. a 3.2 km jog = 3,200 m',
+        '2': 'rarely used outside hectoliters or hectopascals',
+        '1': 'rarely used outside dekagrams',
+        '0': 'the base unit itself — no conversion needed',
+        '-1': 'e.g. a 1.5 dL cup = 0.15 L',
+        '-2': 'e.g. a 15 cm pencil = 0.15 m',
+        '-3': 'e.g. a 5 mm bead = 0.005 m'
+    };
+
+    const staircaseHint = document.getElementById('staircaseHint');
+    const staircaseStepEls = document.querySelectorAll('.staircase .step');
+
+    function showStepExample(step) {
+        const exp = step.dataset.exp;
+        if (!(exp in stepExamples)) return;
+
+        const stepLabel = step.querySelector('span');
+        const prefixName = stepLabel ? stepLabel.textContent : 'unit';
+
+        if (staircaseHint) {
+            staircaseHint.textContent = `${prefixName}: ${stepExamples[exp]}`;
+            staircaseHint.classList.add('active');
+        }
+
+        staircaseStepEls.forEach(el => el.classList.toggle('example-active', el === step));
+    }
+
+    staircaseStepEls.forEach(step => {
+        const stepLabel = step.querySelector('span');
+        step.setAttribute('tabindex', '0');
+        step.setAttribute('role', 'button');
+        step.setAttribute('aria-label', `Show an example for the ${stepLabel ? stepLabel.textContent : 'unit'} prefix`);
+
+        step.addEventListener('click', () => showStepExample(step));
+        step.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                showStepExample(step);
+            }
+        });
+    });
+
+    // ======================================================================
+    // 27. HERO EMBER TRAIL — the fire stirs gently as the cursor moves
+    // through the hero section. Skipped on touch devices and reduced
+    // motion, and thinned out so it feels light rather than busy.
+    // ======================================================================
+    const heroSection = document.getElementById('hero');
+    let lastEmberTrailTime = 0;
+
+    function spawnTrailEmber(x, y) {
+        const ember = document.createElement('div');
+        ember.className = 'cursor-ember';
+        ember.style.left = x + 'px';
+        ember.style.top = y + 'px';
+        ember.style.setProperty('--drift-x', (Math.random() * 30 - 15).toFixed(1) + 'px');
+        document.body.appendChild(ember);
+        setTimeout(() => ember.remove(), 1100);
+    }
+
+    if (heroSection) {
+        heroSection.addEventListener('mousemove', (e) => {
+            if (!canHoverTilt.matches || prefersReducedMotion.matches) return;
+            const now = Date.now();
+            if (now - lastEmberTrailTime < 110) return;
+            lastEmberTrailTime = now;
+            if (Math.random() > 0.4) return;
+            spawnTrailEmber(e.clientX, e.clientY);
+        });
     }
 
 });
